@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n="title">Stackly Finance & Accounting - Business Growth</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+  <style>
+    /* CSS variables for a consistent dark theme */
+    :root {
+      --bg: #0b0d12;
+      --surface: #0f1219;
+      --glass: rgba(255,255,255,0.08);
+      --text: #e9eefc;
+      --muted: #a6b1d0;
+      --brand: #224DB7;
+      --brand-2: #5b8cff;
+      --accent: #00d1ff;
+      --card: #101522;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --hero-overlay-dark: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
+      --badge-bg: rgba(34,77,183,.15);
+      --badge-border: rgba(34,77,183,.35);
+      --badge-text: #cfe0ff;
+    }
+
+    /* Light theme overrides for a dual-theme design */
+    body.light {
+      --bg: #f0f4f9;
+      --surface: #ffffff;
+      --glass: rgba(0,0,0,0.05);
+      --text: #1d2c41;
+      --muted: #5e6d8a;
+      --brand: #224DB7;
+      --brand-2: #5b8cff;
+      --accent: #008cff;
+      --card: #ffffff;
+      --shadow: 0 10px 30px rgba(0, 0, 0, .1);
+      --hero-overlay-dark: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
+      --badge-bg: rgba(34,77,183,.05);
+      --badge-border: rgba(34,77,183,.2);
+      --badge-text: #224DB7;
+    }
+    
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--surface) 100%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(1200px, 92%); margin-inline: auto; }
+
+    /* ---------- Header (sticky, glass) ---------- */
+    .header { background-color: var(--surface); padding: 1.25rem 0; position: sticky; top: 0; z-index: 1000; box-shadow: var(--shadow); transition: background-color 0.3s ease; }
+    .logo-img { height: 40px; width: auto; margin-right: 8px; animation: floating 3s ease-in-out infinite; }
+    .nav-container { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.5rem; font-weight: 700; color: var(--brand); display: flex; align-items: center; }
+    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+    .nav { flex-grow: 1; display: flex; justify-content: flex-end; margin-right: 1rem; }
+    .nav-links { list-style: none; display: flex; gap: 1.5rem; margin: 0; padding: 0; align-items: center; }
+    .nav-links a { color: var(--muted); font-weight: 600; padding: 5px 0; transition: color .3s; position: relative; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-links a:hover {
+        transform: translateY(-2px);
+    }
+    .nav-links a::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--brand-2);
+        transform: scaleX(0);
+        transition: transform 0.3s ease-in-out;
+    }
+    .nav-links a:hover::after {
+        transform: scaleX(1);
+    }
+
+    /* Dropdowns */
+    .dropdown-menu {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+      position: absolute;
+      top: 100%;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      border-radius: 8px;
+      padding: 10px 0;
+      min-width: 150px;
+      list-style: none;
+    }
+    .nav-links li:hover > .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0.2s; }
+    .dropdown-menu a { padding: 10px 15px; color: var(--text); display: block; transition: color 0.3s ease, background-color 0.3s ease; }
+    .dropdown-menu a:hover { background-color: var(--surface); color: var(--brand); }
+
+    .mobile-menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; }
+    .theme-toggle { display: block; }
+
+    /* Language Selector */
+    .language-selector {
+        display: flex;
+        align-items: center;
+        background-color: var(--surface);
+        border: 1px solid var(--muted);
+        border-radius: 8px;
+        padding: 6px 10px;
+        gap: 8px;
+        color: var(--text);
+    }
+    .language-selector select {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: var(--text);
+        font-family: inherit;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+    .language-selector select option {
+        background-color: var(--surface);
+        color: var(--text);
+    }
+
+    @media (max-width: 780px) {
+      .dropdown-menu { position: static; background: var(--card); border-radius: 8px; box-shadow: var(--shadow); padding: 8px 0; margin-left: 16px; min-width: 140px; display: none; opacity: 1; visibility: visible; transform: none; }
+      .dropdown-menu li a { color: var(--text); padding: 10px 18px; display: block; font-weight: 500; }
+      .dropdown-menu li a:hover { background: var(--surface); color: var(--brand); }
+    } 
+
+    /* Profile dropdown */
+    .profile-container { position: relative; display: inline-block; }
+    .profile-icon { width: 40px; height: 40px; border-radius: 50%; background-color: var(--brand); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; cursor: pointer; font-size: 1rem; animation: floating 3s ease-in-out infinite 0.5s; }
+    .profile-menu { display: none; position: absolute; top: 110%; right: 0; background: var(--card); box-shadow: var(--shadow); border-radius: 8px; overflow: hidden; transition: background-color 0.3s ease; z-index: 1000; padding: 5px 0; min-width: 150px; }
+    .profile-menu.active { display: block; }
+    .profile-menu a { display: block; padding: 10px 15px; color: var(--text); white-space: nowrap; transition: color 0.3s ease, background-color 0.3s ease; }
+    .profile-menu a:hover { background-color: var(--surface); }
+
+    /* RTL Direction */
+    body[dir="rtl"] .nav-links{ text-align: right; }
+    body[dir="rtl"] .nav{ justify-content: flex-start; }
+    body[dir="rtl"] .dropdown-menu li a{ text-align: right; }
+    body[dir="rtl"] .hero-about-content,
+    body[dir="rtl"] .about-section,
+    body[dir="rtl"] .values-section,
+    body[dir="rtl"] .services-section,
+    body[dir="rtl"] .team-section,
+    body[dir="rtl"] .cta-section {
+      text-align: right;
+    }
+    body[dir="rtl"] .footer-content > div { text-align: right; }
+    body[dir="rtl"] .footer-content {
+      grid-template-columns: 1.4fr 1fr 1fr 2fr;
+    }
+    body[dir="rtl"] .footer-bottom { text-align: center; }
+    
+    /* New styles for the About Us page */
+    .hero-about {
+      position: relative;
+      height: 100vh;
+      min-height: 400px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--surface) 100%);
+      padding: 0 16px;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    /* Styles for the video background and overlay */
+    .video-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for better text contrast */
+      z-index: 1;
+    }
+
+    .hero-about-content {
+      position: relative;
+      z-index: 2; /* Ensure content is on top of video and overlay */
+      will-change: transform;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    .about-section, .services-section, .team-section {
+      padding: 70px 0;
+      background: var(--bg);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+    
+    .values-section {
+      padding: 70px 0;
+      background: var(--surface);
+      border-top: 1px solid rgba(255,255,255,.06);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .value-card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: var(--shadow);
+      transition: transform .3s ease, box-shadow .3s ease;
+      will-change: transform;
+    }
+    
+    .value-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 18px 40px rgba(0,0,0,.5);
+    }
+
+    .value-card i {
+      font-size: 2.5rem;
+      color: var(--brand-2);
+      margin-bottom: 16px;
+    }
+
+    .value-card h3 {
+      font-size: 1.5rem;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+    .value-card p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .service-card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: var(--shadow);
+      transition: transform .3s ease, box-shadow .3s ease;
+      will-change: transform;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 18px 40px rgba(0,0,0,.5);
+    }
+
+    .service-card i {
+      font-size: 2.5rem;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    
+    .team-section {
+      padding: 70px 0;
+      background: var(--bg);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+    }
+
+    .team-member-card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform .3s ease, box-shadow .3s ease;
+      will-change: transform;
+    }
+
+    .team-member-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 18px 40px rgba(0,0,0,.5);
+    }
+
+    .member-img-container {
+      position: relative;
+      height: 250px;
+      overflow: hidden;
+    }
+
+    .member-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .5s ease;
+    }
+
+    .team-member-card:hover .member-img-container img {
+      transform: scale(1.05);
+    }
+
+    .member-details {
+      padding: 24px;
+      text-align: center;
+    }
+
+    .member-details h4 {
+      margin: 0 0 4px;
+      font-size: 1.2rem;
+    }
+
+    .member-details p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .section-title { text-align:center; margin:0 0 34px; }
+    .section-title h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); margin:0; }
+
+    /* New Call-to-action section */
+    .cta-section {
+      background: var(--surface);
+      padding: 80px 0;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+    .cta-section h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin: 0 0 1rem;
+    }
+    .cta-section p {
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      font-size: 1.1rem;
+    }
+
+    .btn-primary {
+      background-color: var(--brand);
+      color: #fff;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+      animation: pulse 2s infinite;
+    }
+    .btn-primary:hover {
+        background-color: var(--brand-2);
+        transform: translateY(-2px);
+    }
+
+    /* Footer */
+    .footer { background: var(--surface); border-top: 1px solid rgba(255,255,255,.06); transition: background-color 0.3s ease; }
+    .footer-content { display:grid; grid-template-columns: 2fr 1fr 1fr 1.4fr; gap: 20px; padding: 46px 0; }
+    .footer h3, .footer h4 { margin-top:0; }
+    .footer p, .footer li { color: var(--muted); transition: color 0.3s ease; }
+    .social-links { display:flex; gap:12px; margin-top:10px; }
+    .social-links a { width:38px; height:38px; display:grid; place-items:center; border-radius:10px; background: var(--glass); border:1px solid var(--glass); transition: background-color 0.3s ease; }
+    .footer ul { list-style:none; padding:0; margin:0; display:grid; gap:8px; }
+    .footer-bottom { border-top:1px solid rgba(255,255,255,.06); text-align:center; padding: 16px 0 22px; color: var(--muted); font-size:.95rem; }
+    .social-links a:hover {
+        transform: translateY(-2px);
+        background-color: var(--brand-2);
+        color: #fff;
+    }
+
+    /* Utilities */
+    
+    /* Sticky CTA */
+
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 1024px) {
+      .cards { grid-template-columns: repeat(2, 1fr); }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-content { grid-template-columns: 1.4fr 1fr 1fr; }
+      .nav-container { grid-template-columns: auto 1fr auto; }
+      .theme-toggle { display:block; }
+      .insights-wrap { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 780px) {
+      .mobile-menu-toggle { display:block; }
+      .nav { display:none; position:absolute; left:0; right:0; top:100%; background:var(--surface); box-shadow:var(--shadow); padding:1rem 0; }
+      .nav.open { display:block; }
+      .nav-links { flex-direction:column; align-items:flex-start; padding: 10px 12px 16px; }
+      .dropdown:hover .dropdown-menu { display:none; }
+      .dropdown .dropdown-toggle::after{ content: ""; }
+      .dropdown-menu { position:relative; border:none; background:transparent; padding:6px 0 10px; display:block; }
+      .welcome-content { grid-template-columns: 1fr; }
+      .cards { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .trust-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-content { grid-template-columns: 1fr; }
+      .case-study-card { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 420px) { .trust-grid { grid-template-columns: 1fr; } }
+
+    /* Keyframes for new animations */
+    @keyframes floating {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 77, 183, 0.4); }
+      70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(34, 77, 183, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 77, 183, 0); }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container nav-container">
+      <a href="home1.html" class="logo">
+        <img class="logo-img" src="img/cropped-image-removebg-preview-2.png" alt="Stackly Logo">
+      </a>
+      <nav class="nav" id="site-nav">
+        <ul class="nav-links">
+          <li class="dropdown">
+            <a href="home1.html" data-i18n="nav.home">Home <i class="fas fa-chevron-down"></i></a>
+            <ul class="dropdown-menu">
+              <li><a href="home1.html" data-i18n="nav.home1">Home 1</a></li>
+              <li><a href="home3.html" data-i18n="nav.home2">Home 2</a></li>
+            </ul>
+          </li>
+          <li><a href="About us.html" data-i18n="nav.about">About Us</a></li>
+          <li class="dropdown">
+            <a href="Services.html" data-i18n="nav.services">Services <i class="fas fa-chevron-down"></i></a>
+            <ul class="dropdown-menu">
+              <li><a href="Services.html" data-i18n="nav.allServices">All Services</a></li>
+               <li><a href="Book keeping.html" data-i18n="nav.bookkeeping">Bookkeeping</a></li>
+            <li><a href="Tax.html" data-i18n="nav.taxPlanning">Tax Planning</a></li>
+            <li><a href="payroll.html" data-i18n="nav.payrollServices">Payroll Services</a></li>
+            <li><a href="financial-advisory.html" data-i18n="nav.financialReporting">Financial Reporting</a></li>
+            <li><a href="auditing.html" data-i18n="nav.auditing">Auditing</a></li>
+             <li><a href="corporate finance.html" data-i18n="nav.corporateFinance">Corporate finance</a></li>
+             </ul>
+          </li>
+          <li><a href="blog.html" data-i18n="nav.blog">Blog</a></li>
+          <li><a href="contact.html" data-i18n="nav.contact">Contact Us</a></li>
+          <li class="dropdown">
+            <a href="signup.html" data-i18n="nav.login">Login <i class="fas fa-chevron-down"></i></a>
+            <ul class="dropdown-menu">
+              <li><a href="login.html" data-i18n="nav.signUpLogin">Sign Up/Login</a></li>
+              <li><a href="sign admin.html" data-i18n="nav.adminLogin">Admin Login</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <div class="nav-right">
+        <div class="profile-container" style="position: relative;">
+          <button id="profile-btn" class="profile-icon">
+            <span id="initials-display"></span>
+          </button>
+          <div class="profile-menu" id="profile-dropdown">
+            <a href="login.html" id="logout-btn" data-i18n="nav.logout">Logout</a>
+          </div>
+        </div>
+        <div class="theme-toggle">
+          <button id="theme-toggle" class="btn btn-secondary">
+            <i class="fas fa-moon"></i>
+          </button>
+        </div>
+        <div class="language-selector">
+          <i class="fas fa-globe"></i>
+          <select id="language-select"></select>
+        </div>
+        <div class="mobile-menu-toggle" id="mobile-toggle">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </div>
+  </header>
+
+    <section class="hero-about">
+      <video autoplay muted loop playsinline class="video-background">
+        <source src="videos/855388-sd_960_540_25fps.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="video-overlay"></div>
+
+      <div class="container hero-about-content" data-aos="fade-up">
+        <h1 data-i18n="hero.heading">Our Story</h1>
+        <p data-i18n="hero.subheading">Your trusted partner in finance and accounting, built on a foundation of integrity and expertise.</p>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-text" data-aos="fade-right">
+            <h2 data-i18n="about.heading">Who We Are</h2>
+            <p data-i18n="about.text1">
+              Stackly was founded with a simple yet powerful mission: to empower businesses of all sizes with clear, actionable financial insights. We believe that robust accounting is not just about compliance, but about providing the data you need to make smart strategic decisions and drive sustainable growth.
+            </p>
+            <p data-i18n="about.text2">
+              Our team of certified professionals brings decades of combined experience in finance, accounting, and tax planning. We've worked with startups, established corporations, and everything in between, giving us a unique perspective on the challenges and opportunities you face.
+            </p>
+          </div>
+          <div class="about-image" data-aos="fade-left">
+            <img src="https://i.pinimg.com/1200x/74/7d/a9/747da98e2815d91cb65b84d8c4a6de21.jpg" alt="Our Team at Stackly" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="values-section">
+      <div class="container">
+        <div class="section-title">
+          <h2 data-aos="fade-up" data-i18n="values.heading">Our Core Values</h2>
+        </div>
+        <div class="values-grid">
+          <div class="value-card" data-aos="zoom-in" data-aos-delay="100">
+            <i class="fas fa-lock"></i>
+            <h3 data-i18n="values.integrity.heading">Integrity</h3>
+            <p data-i18n="values.integrity.text">We operate with unwavering honesty and transparency, building trust with every client interaction.</p>
+          </div>
+          <div class="value-card" data-aos="zoom-in" data-aos-delay="200">
+            <i class="fas fa-star-half-stroke"></i>
+            <h3 data-i18n="values.excellence.heading">Excellence</h3>
+            <p data-i18n="values.excellence.text">We are committed to delivering the highest quality service, continuously improving our expertise.</p>
+          </div>
+          <div class="value-card" data-aos="zoom-in" data-aos-delay="300">
+            <i class="fas fa-users"></i>
+            <h3 data-i18n="values.partnership.heading">Partnership</h3>
+            <p data-i18n="values.partnership.text">We see ourselves as an extension of your team, working collaboratively to achieve your goals.</p>
+          </div>
+         
+    </section>
+
+    <section class="services-section">
+      <div class="container">
+        <div class="section-title">
+          <h2 data-i18n="offer.heading" data-aos="fade-up">What We Offer</h2>
+        </div>
+        <div class="services-grid">
+          <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+            <i class="fas fa-chart-line"></i>
+            <h3 data-i18n="offer.service1.heading">Strategic Planning</h3>
+            <p data-i18n="offer.service1.text">Turn financial data into actionable strategies that drive growth and market leadership.</p>
+          </div>
+          <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+            <i class="fas fa-file-invoice"></i>
+            <h3 data-i18n="offer.service2.heading">Bookkeeping & Accounting</h3>
+            <p data-i18n="offer.service2.text">Maintain accurate financial records with our precise and reliable bookkeeping services.</p>
+          </div>
+          <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+            <i class="fas fa-piggy-bank"></i>
+            <h3 data-i18n="offer.service3.heading">Tax Advisory</h3>
+            <p data-i18n="offer.service3.text">Optimize your tax position and ensure compliance with our expert tax planning services.</p>
+          </div>
+         
+    </section>
+
+    <section class="team-section">
+      <div class="container">
+        <div class="section-title">
+          <h2 data-i18n="team.heading" data-aos="fade-up">Meet the Team</h2>
+        </div>
+        <div class="team-grid">
+          <div class="team-member-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="member-img-container">
+              <img src="https://i.pinimg.com/736x/8d/2e/16/8d2e16dc6a0601dd4903516f157563d1.jpg" alt="John Doe" />
+            </div>
+            <div class="member-details">
+              <h4 data-i18n="team.member1.name">John Doe</h4>
+              <p data-i18n="team.member1.title">Founder & CEO</p>
+            </div>
+          </div>
+          <div class="team-member-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="member-img-container">
+              <img src="https://i.pinimg.com/1200x/f3/d6/35/f3d63548db2633e513e312cb33c41239.jpg" alt="Jane Smith" />
+            </div>
+            <div class="member-details">
+              <h4 data-i18n="team.member2.name">Jane Smith</h4>
+              <p data-i18n="team.member2.title">Chief Financial Officer</p>
+            </div>
+          </div>
+          <div class="team-member-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="member-img-container">
+              <img src="https://i.pinimg.com/1200x/e6/92/15/e692151bfc86c7d523697aa0dbd1a5d0.jpg" alt="Mike Johnson" />
+            </div>
+            <div class="member-details">
+              <h4 data-i18n="team.member3.name">Mike Johnson</h4>
+              <p data-i18n="team.member3.title">Senior Tax Consultant</p>
+            </div>
+          </div>
+         
+    </section>
+
+    <section class="cta-section">
+      <div class="container" data-aos="zoom-in">
+        <h2 data-i18n="cta.heading">Ready to Grow Your Business?</h2>
+        <p data-i18n="cta.subheading">Contact us today for a free consultation and discover how our expert financial guidance can help you achieve your goals.</p>
+        <a href="contact.html" class="btn btn-primary" data-i18n="cta.button">Get in Touch</a>
+      </div>
+    </section>
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div>
+           <img class="logo-img" src="img/cropped-image-removebg-preview-2.png" alt="Stackly Logo">
+          <p data-i18n="footer.aboutText">Your trusted partner in financial growth. We provide specialized accounting and advisory solutions to help your business thrive.</p>
+        </div>
+        <div>
+          <h4 data-i18n="footer.quickLinks">Quick Links</h4>
+          <ul>
+            <li><a href="home1.html" data-i18n="nav.home">Home</a></li>
+            <li><a href="About us.html" data-i18n="nav.about">About Us</a></li>
+            <li><a href="Services.html" data-i18n="nav.services">Services</a></li>
+            <li><a href="blog.html" data-i18n="nav.blog">Blog</a></li>
+            <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-i18n="footer.services">Services</h4>
+          <ul>
+           <li><a href="Book keeping.html" data-i18n="nav.bookkeeping">Bookkeeping</a></li>
+            <li><a href="Tax.html" data-i18n="nav.taxPlanning">Tax Planning</a></li>
+            <li><a href="payroll.html" data-i18n="nav.payrollServices">Payroll Services</a></li>
+            <li><a href="financial-advisory.html" data-i18n="nav.financialReporting">Financial Reporting</a></li>
+            <li><a href="auditing.html" data-i18n="nav.auditing">Auditing</a></li>
+             <li><a href="corporate finance.html" data-i18n="nav.corporateFinance">Corporate finance</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-i18n="footer.contactInfo">Contact Info</h4>
+          <ul>
+            <li><i class="fas fa-map-marker-alt"></i> <span data-i18n="footer.address">456 Financial Ave, Fiscal City, State 67890</span></li>
+            <li><i class="fas fa-phone"></i> <span data-i18n="footer.phone">(555) 987-6543</span></li>
+            <li><i class="fas fa-envelope"></i> <span data-i18n="footer.email">info@stacklyfinance.com</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom"><span data-i18n="footer.copyright">&copy; 2025 Stackly Finance & Accounting. All rights reserved.</span></div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    // --- Scripts for header/footer (Mobile, Theme, Profile) ---
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const nav = document.getElementById('site-nav');
+    mobileToggle?.addEventListener('click', ()=> nav.classList.toggle('open'));
+
+    document.getElementById('theme-toggle')?.addEventListener('click', ()=>{
+      document.body.classList.toggle('light');
+    });
+
+    const profileBtn = document.getElementById('profile-btn');
+    const profileDropdown = document.getElementById('profile-dropdown');
+    const initialsDisplay = document.getElementById('initials-display');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    function updateProfileButton() {
+      const userData = JSON.parse(localStorage.getItem('userData') || "{}");
+      if (userData && userData.firstName && userData.lastName) {
+        const initials = `${userData.firstName.charAt(0)}${userData.lastName.charAt(0)}`.toUpperCase();
+        initialsDisplay.textContent = initials;
+        profileBtn.style.display = 'flex';
+      } else {
+        profileBtn.style.display = 'none';
+      }
+    }
+    
+    function toggleDropdown() { profileDropdown.classList.toggle('active'); }
+    function handleLogout() {
+      localStorage.removeItem('userData'); localStorage.removeItem('isLoggedIn');
+      const messageBox = document.createElement('div');
+      messageBox.innerHTML = 'Logged out successfully! <i class="fas fa-check-circle"></i>';
+      messageBox.style.cssText = `
+        position: fixed; top: 20px; right: 20px; background-color: var(--brand); color: white;
+        padding: 15px 25px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,.2);
+        z-index: 9999; display: flex; align-items: center; gap: 10px; animation: fadeOut 3s forwards;
+      `;
+      document.body.appendChild(messageBox);
+      const styleSheet = document.createElement("style");
+      styleSheet.innerText = `
+        @keyframes fadeOut { 0% { opacity: 1; transform: translateY(0);} 80% { opacity: 1; } 100% { opacity: 0; transform: translateY(-20px);} }
+      `;
+      document.head.appendChild(styleSheet);
+      setTimeout(() => { window.location.href = 'login.html'; }, 2000);
+    }
+
+    profileBtn?.addEventListener('click', (e) => { e.stopPropagation(); toggleDropdown(); });
+    logoutBtn?.addEventListener('click', handleLogout);
+    document.addEventListener('click', (e) => {
+      if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) profileDropdown.classList.remove('active');
+    });
+
+    // ====== Mobile dropdown toggle for navigation ======
+    document.querySelectorAll('.nav-links .dropdown > a').forEach(function(dropdownToggle) {
+      dropdownToggle.addEventListener('click', function(e) {
+        if (window.innerWidth <= 780) {
+          e.preventDefault();
+          const dropdownMenu = this.nextElementSibling;
+          if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
+            dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+          }
+        }
+      });
+    });
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 780) {
+        document.querySelectorAll('.dropdown-menu').forEach(menu => { menu.style.display = ''; });
+      }
+    });
+
+    // ====== Language selector functions ======
+    const htmlElement = document.querySelector('html');
+    const languageSelect = document.getElementById('language-select');
+    const languages = {
+      'en': 'English',
+      'he': 'Hebrew',
+      'ar': 'Arabic'
+    };
+
+    const translations = {
+      'en': {
+        'title': 'Stackly Finance & Accounting - Business Growth',
+        'nav.home': 'Home',
+        'nav.home1': 'Home 1',
+        'nav.home2': 'Home 2',
+        'nav.about': 'About Us',
+        'nav.services': 'Services',
+        'nav.allServices': 'All Services',
+        'nav.bookkeeping': 'Bookkeeping',
+        'nav.taxPlanning': 'Tax Planning',
+        'nav.payrollServices': 'Payroll Services',
+        'nav.financialReporting': 'Financial Reporting',
+        'nav.auditing': 'Auditing',
+        'nav.corporateFinance': 'Corporate finance',
+        'nav.blog': 'Blog',
+        'nav.contact': 'Contact Us',
+        'nav.login': 'Login',
+        'nav.signUpLogin': 'Sign Up/Login',
+        'nav.adminLogin': 'Admin Login',
+        'nav.logout': 'Logout',
+        'hero.heading': 'Our Story',
+        'hero.subheading': 'Your trusted partner in finance and accounting, built on a foundation of integrity and expertise.',
+        'about.heading': 'Who We Are',
+        'about.text1': 'Stackly was founded with a simple yet powerful mission: to empower businesses of all sizes with clear, actionable financial insights. We believe that robust accounting is not just about compliance, but about providing the data you need to make smart strategic decisions and drive sustainable growth.',
+        'about.text2': 'Our team of certified professionals brings decades of combined experience in finance, accounting, and tax planning. We\'ve worked with startups, established corporations, and everything in between, giving us a unique perspective on the challenges and opportunities you face.',
+        'values.heading': 'Our Core Values',
+        'values.integrity.heading': 'Integrity',
+        'values.integrity.text': 'We operate with unwavering honesty and transparency, building trust with every client interaction.',
+        'values.excellence.heading': 'Excellence',
+        'values.excellence.text': 'We are committed to delivering the highest quality service, continuously improving our expertise.',
+        'values.partnership.heading': 'Partnership',
+        'values.partnership.text': 'We see ourselves as an extension of your team, working collaboratively to achieve your goals.',
+        'offer.heading': 'What We Offer',
+        'offer.service1.heading': 'Strategic Planning',
+        'offer.service1.text': 'Turn financial data into actionable strategies that drive growth and market leadership.',
+        'offer.service2.heading': 'Bookkeeping & Accounting',
+        'offer.service2.text': 'Maintain accurate financial records with our precise and reliable bookkeeping services.',
+        'offer.service3.heading': 'Tax Advisory',
+        'offer.service3.text': 'Optimize your tax position and ensure compliance with our expert tax planning services.',
+        'team.heading': 'Meet the Team',
+        'team.member1.name': 'John Doe',
+        'team.member1.title': 'Founder & CEO',
+        'team.member2.name': 'Jane Smith',
+        'team.member2.title': 'Chief Financial Officer',
+        'team.member3.name': 'Mike Johnson',
+        'team.member3.title': 'Senior Tax Consultant',
+        'cta.heading': 'Ready to Grow Your Business?',
+        'cta.subheading': 'Contact us today for a free consultation and discover how our expert financial guidance can help you achieve your goals.',
+        'cta.button': 'Get in Touch',
+        'footer.aboutText': 'Your trusted partner in financial growth. We provide specialized accounting and advisory solutions to help your business thrive.',
+        'footer.quickLinks': 'Quick Links',
+        'footer.services': 'Services',
+        'footer.contactInfo': 'Contact Info',
+        'footer.address': '456 Financial Ave, Fiscal City, State 67890',
+        'footer.phone': '(555) 987-6543',
+        'footer.email': 'info@stacklyfinance.com',
+        'footer.copyright': '© 2025 Stackly Finance & Accounting. All rights reserved.',
+      },
+      'he': {
+        'title': 'סטקלי פיננסים וחשבונאות - צמיחה עסקית',
+        'nav.home': 'בית',
+        'nav.home1': 'בית 1',
+        'nav.home2': 'בית 2',
+        'nav.about': 'אודותינו',
+        'nav.services': 'שירותים',
+        'nav.allServices': 'כל השירותים',
+        'nav.bookkeeping': 'הנהלת חשבונות',
+        'nav.taxPlanning': 'תכנון מס',
+        'nav.payrollServices': 'שירותי שכר',
+        'nav.financialReporting': 'דוחות כספיים',
+        'nav.auditing': 'ביקורת',
+        'nav.corporateFinance': 'מימון תאגידי',
+        'nav.blog': 'בלוג',
+        'nav.contact': 'צור קשר',
+        'nav.login': 'התחברות',
+        'nav.signUpLogin': 'הירשם/התחבר',
+        'nav.adminLogin': 'התחברות מנהל',
+        'nav.logout': 'התנתק',
+        'hero.heading': 'הסיפור שלנו',
+        'hero.subheading': 'השותף המהימן שלך בפיננסים וחשבונאות, שנבנה על יסודות של יושרה ומומחיות.',
+        'about.heading': 'מי אנחנו',
+        'about.text1': 'סטקלי הוקמה עם משימה פשוטה אך עוצמתית: להעצים עסקים מכל הגדלים עם תובנות פיננסיות ברורות ופעילות. אנו מאמינים שחשבונאות חזקה היא לא רק עמידה בדרישות, אלא מתן הנתונים הדרושים לך כדי לקבל החלטות אסטרטגיות חכמות ולהניע צמיחה בת קיימא.',
+        'about.text2': 'צוות המומחים המוסמך שלנו מביא עשרות שנות ניסיון משולב בפיננסים, חשבונאות ותכנון מס. עבדנו עם סטארט-אפים, חברות מבוססות וכל מה שביניהם, מה שנותן לנו פרספקטיבה ייחודית על האתגרים וההזדמנויות שאתה עומד בפניהם.',
+        'values.heading': 'ערכי הליבה שלנו',
+        'values.integrity.heading': 'יושרה',
+        'values.integrity.text': 'אנו פועלים עם יושר ושקיפות ללא פשרות, בונים אמון בכל אינטראקציה עם הלקוח.',
+        'values.excellence.heading': 'מצוינות',
+        'values.excellence.text': 'אנו מחויבים לספק את השירות האיכותי ביותר, תוך שיפור מתמיד של המומחיות שלנו.',
+        'values.partnership.heading': 'שותפות',
+        'values.partnership.text': 'אנו רואים את עצמנו כהמשך לצוות שלך, פועלים בשיתוף פעולה להשגת יעדיך.',
+        'offer.heading': 'מה אנו מציעים',
+        'offer.service1.heading': 'תכנון אסטרטגי',
+        'offer.service1.text': 'הפוך נתונים פיננסיים לאסטרטגיות פעילות שמניעות צמיחה ומנהיגות בשוק.',
+        'offer.service2.heading': 'הנהלת חשבונות',
+        'offer.service2.text': 'שמור על רישומים פיננסיים מדויקים עם שירותי הנהלת החשבונות המדויקים והאמינים שלנו.',
+        'offer.service3.heading': 'ייעוץ מס',
+        'offer.service3.text': 'מטב את מצב המס שלך והבטח עמידה בתקנות עם שירותי תכנון המס המומחים שלנו.',
+        'team.heading': 'הכירו את הצוות',
+        'team.member1.name': 'יוחנן כהן',
+        'team.member1.title': 'מייסד ומנכ"ל',
+        'team.member2.name': 'שרה לוי',
+        'team.member2.title': 'מנהלת כספים ראשית',
+        'team.member3.name': 'דוד פרץ',
+        'team.member3.title': 'יועץ מס בכיר',
+        'cta.heading': 'מוכן להצמיח את העסק שלך?',
+        'cta.subheading': 'צור קשר עוד היום לייעוץ חינם וגלה כיצד הייעוץ הפיננסי המומחה שלנו יכול לעזור לך להשיג את מטרותיך.',
+        'cta.button': 'צור קשר',
+        'footer.aboutText': 'השותף המהימן שלך לצמיחה פיננסית. אנו מספקים פתרונות חשבונאיים וייעוץ מיוחדים כדי לעזור לעסק שלך לשגשג.',
+        'footer.quickLinks': 'קישורים מהירים',
+        'footer.services': 'שירותים',
+        'footer.contactInfo': 'פרטי קשר',
+        'footer.address': 'רחוב הפיננסים 456, עיר הפיסקל, מדינה 67890',
+        'footer.phone': '(555) 987-6543',
+        'footer.email': 'info@stacklyfinance.com',
+        'footer.copyright': '© 2025 סטקלי פיננסים וחשבונאות. כל הזכויות שמורות.',
+      },
+      'ar': {
+        'title': 'ستاكلي للتمويل والمحاسبة - نمو الأعمال',
+        'nav.home': 'الرئيسية',
+        'nav.home1': 'الرئيسية 1',
+        'nav.home2': 'الرئيسية 2',
+        'nav.about': 'من نحن',
+        'nav.services': 'الخدمات',
+        'nav.allServices': 'جميع الخدمات',
+        'nav.bookkeeping': 'مسك الدفاتر',
+        'nav.taxPlanning': 'التخطيط الضريبي',
+        'nav.payrollServices': 'خدمات كشوف المرتبات',
+        'nav.financialReporting': 'التقارير المالية',
+        'nav.auditing': 'التدقيق',
+        'nav.corporateFinance': 'التمويل للشركات',
+        'nav.blog': 'المدونة',
+        'nav.contact': 'اتصل بنا',
+        'nav.login': 'تسجيل الدخول',
+        'nav.signUpLogin': 'إنشاء حساب/تسجيل دخول',
+        'nav.adminLogin': 'تسجيل دخول المسؤول',
+        'nav.logout': 'تسجيل خروج',
+        'hero.heading': 'قصتنا',
+        'hero.subheading': 'شريكك الموثوق في التمويل والمحاسبة، الذي بُني على أساس من النزاهة والخبرة.',
+        'about.heading': 'من نحن',
+        'about.text1': 'تأسست ستاكلي بمهمة بسيطة ولكنها قوية: تمكين الشركات من جميع الأحجام من خلال رؤى مالية واضحة وقابلة للتنفيذ. نحن نؤمن بأن المحاسبة القوية لا تتعلق فقط بالامتثال، بل بتوفير البيانات التي تحتاجها لاتخاذ قرارات استراتيجية ذكية ودفع النمو المستدام.',
+        'about.text2': 'يأتي فريقنا من المهنيين المعتمدين بعقود من الخبرة المشتركة في التمويل، المحاسبة، والتخطيط الضريبي. لقد عملنا مع الشركات الناشئة، والشركات القائمة، وكل ما بينهما، مما يمنحنا منظورًا فريدًا للتحديات والفرص التي تواجهها.',
+        'values.heading': 'قيمنا الأساسية',
+        'values.integrity.heading': 'النزاهة',
+        'values.integrity.text': 'نعمل بصدق وشفافية لا يتزعزعان، مما يبني الثقة في كل تفاعل مع العميل.',
+        'values.excellence.heading': 'التميز',
+        'values.excellence.text': 'نحن ملتزمون بتقديم أعلى مستويات الجودة في الخدمة، وتحسين خبراتنا باستمرار.',
+        'values.partnership.heading': 'الشراكة',
+        'values.partnership.text': 'نرى أنفسنا امتدادًا لفريقك، نعمل بشكل تعاوني لتحقيق أهدافك.',
+        'offer.heading': 'ماذا نقدم',
+        'offer.service1.heading': 'التخطيط الاستراتيجي',
+        'offer.service1.text': 'حوّل البيانات المالية إلى استراتيجيات قابلة للتنفيذ تدفع النمو والريادة في السوق.',
+        'offer.service2.heading': 'مسك الدفاتر والمحاسبة',
+        'offer.service2.text': 'حافظ على سجلات مالية دقيقة من خلال خدماتنا الدقيقة والموثوقة في مسك الدفاتر.',
+        'offer.service3.heading': 'الاستشارات الضريبية',
+        'offer.service3.text': 'حسّن وضعك الضريبي وتأكد من الامتثال مع خدمات التخطيط الضريبي الخبيرة لدينا.',
+        'team.heading': 'قابل الفريق',
+        'team.member1.name': 'جون دو',
+        'team.member1.title': 'المؤسس والرئيس التنفيذي',
+        'team.member2.name': 'جين سميث',
+        'team.member2.title': 'المديرة المالية',
+        'team.member3.name': 'مايك جونسون',
+        'team.member3.title': 'مستشار ضرائب أول',
+        'cta.heading': 'هل أنت مستعد لتنمية عملك؟',
+        'cta.subheading': 'اتصل بنا اليوم للحصول على استشارة مجانية واكتشف كيف يمكن لإرشاداتنا المالية الخبيرة أن تساعدك على تحقيق أهدافك.',
+        'cta.button': 'تواصل معنا',
+        'footer.aboutText': 'شريكك الموثوق في النمو المالي. نحن نقدم حلول محاسبة واستشارات متخصصة لمساعدة عملك على الازدهار.',
+        'footer.quickLinks': 'روابط سريعة',
+        'footer.services': 'الخدمات',
+        'footer.contactInfo': 'معلومات الاتصال',
+        'footer.address': '456 شارع المالية، مدينة فيسكال، ولاية 67890',
+        'footer.phone': '(555) 987-6543',
+        'footer.email': 'info@stacklyfinance.com',
+        'footer.copyright': '© 2025 ستاكلي للتمويل والمحاسبة. جميع الحقوق محفوظة.',
+      },
+    };
+
+    function updateContent(lang) {
+      document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.dataset.i18n;
+        if (translations[lang] && translations[lang][key]) {
+          element.textContent = translations[lang][key];
+        }
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+        const key = element.dataset.i18nPlaceholder;
+        if (translations[lang] && translations[lang][key]) {
+          element.placeholder = translations[lang][key];
+        }
+      });
+      htmlElement.setAttribute('lang', lang);
+      if (lang === 'ar' || lang === 'he') {
+        htmlElement.setAttribute('dir', 'rtl');
+      } else {
+        htmlElement.removeAttribute('dir');
+      }
+      localStorage.setItem('lang', lang);
+    }
+
+    // Initialize dropdown and content on page load
+    const currentLang = localStorage.getItem('lang') || 'en';
+    if (languageSelect) {
+      for (const [code, name] of Object.entries(languages)) {
+        const option = document.createElement('option');
+        option.value = code;
+        option.textContent = name;
+        languageSelect.appendChild(option);
+      }
+      languageSelect.value = currentLang;
+      languageSelect.addEventListener('change', (event) => {
+        updateContent(event.target.value);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateProfileButton();
+      updateContent(currentLang);
+      AOS.init({
+        duration: 1000,
+        once: true,
+      });
+    });
+  </script>
+</body>
+</html>

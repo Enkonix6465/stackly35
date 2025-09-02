@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-i18n="title">Stackly Finance & Accounting - Business Growth</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+    <style>
+      /* CSS variables for a consistent dark theme */
+      :root {
+        --bg: #0b0d12;
+        --surface: #0f1219;
+        --glass: rgba(255,255,255,0.08);
+        --text: #e9eefc;
+        --muted: #a6b1d0;
+        --brand: #224DB7;
+        --brand-2: #5b8cff;
+        --accent: #00d1ff;
+        --card: #101522;
+        --shadow: 0 10px 30px rgba(0,0,0,.35);
+        --hero-overlay-dark: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
+        --badge-bg: rgba(34,77,183,.15);
+        --badge-border: rgba(34,77,183,.35);
+        --badge-text: #cfe0ff;
+      }
+
+      /* Light theme overrides for a dual-theme design */
+      body.light {
+        --bg: #f0f4f9;
+        --surface: #ffffff;
+        --glass: rgba(0,0,0,0.05);
+        --text: #1d2c41;
+        --muted: #5e6d8a;
+        --brand: #224DB7;
+        --brand-2: #5b8cff;
+        --accent: #008cff;
+        --card: #ffffff;
+        --shadow: 0 10px 30px rgba(0, 0, 0, .1);
+        --hero-overlay-dark: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
+        --badge-bg: rgba(34,77,183,.05);
+        --badge-border: rgba(34,77,183,.2);
+        --badge-text: #224DB7;
+      }
+      
+      body {
+        margin: 0;
+        font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        background: linear-gradient(180deg, var(--bg) 0%, var(--surface) 100%);
+        color: var(--text);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      a { color: inherit; text-decoration: none; }
+      img { max-width: 100%; display: block; }
+      .container { width: min(1200px, 92%); margin-inline: auto; }
+
+      /* ---------- Header (sticky, glass) ---------- */
+      .header { background-color: var(--surface); padding: 1.25rem 0; position: sticky; top: 0; z-index: 1000; box-shadow: var(--shadow); transition: background-color 0.3s ease; }
+      .logo-img { height: 40px; width: auto; margin-right: 8px; }
+      .nav-container { display: flex; justify-content: space-between; align-items: center; }
+      .logo { font-size: 1.5rem; font-weight: 700; color: var(--brand); display: flex; align-items: center; }
+      .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+      .nav { flex-grow: 1; display: flex; justify-content: flex-end; margin-right: 1rem; }
+      .nav-links { list-style: none; display: flex; gap: 1.5rem; margin: 0; padding: 0; align-items: center; }
+      .nav-links a { color: var(--muted); font-weight: 600; padding: 5px 0; transition: color .3s; position: relative; }
+      .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+      /* Dropdowns */
+      .dropdown-menu {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+        position: absolute;
+        top: 100%;
+        background: var(--card);
+        box-shadow: var(--shadow);
+        border-radius: 8px;
+        padding: 10px 0;
+        min-width: 150px;
+        list-style: none;
+      }
+      .nav-links li:hover > .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0.2s; }
+      .dropdown-menu a { padding: 10px 15px; color: var(--text); display: block; transition: color 0.3s ease; }
+
+      .mobile-menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; }
+      .theme-toggle { display: block; }
+
+      /* Language Selector Styles from home3.html */
+      .language-selector {
+        display: flex;
+        align-items: center;
+        background-color: var(--surface);
+        border: 1px solid var(--muted);
+        border-radius: 8px;
+        padding: 6px 10px;
+        gap: 8px;
+        color: var(--text);
+      }
+      .language-selector select {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: var(--text);
+        font-family: inherit;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+      .language-selector select option {
+        background-color: var(--surface);
+        color: var(--text);
+      }
+
+      @media (max-width: 780px) {
+        .dropdown-menu { position: static; background: var(--card); border: none; box-shadow: none; padding: 8px 0 0; margin-left: 16px; min-width: 140px; display: none; opacity: 1; visibility: visible; transform: none; }
+        .dropdown-menu li a { color: var(--text); padding: 10px 18px; display: block; font-weight: 500; }
+        .dropdown-menu li a:hover { background: var(--surface); color: var(--brand); }
+      } 
+
+      /* Profile dropdown */
+      .profile-container { position: relative; display: inline-block; }
+      .profile-icon { width: 40px; height: 40px; border-radius: 50%; background-color: var(--brand); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; cursor: pointer; font-size: 1rem; }
+      .profile-menu { display: none; position: absolute; top: 110%; right: 0; background: var(--card); box-shadow: var(--shadow); border-radius: 8px; overflow: hidden; transition: background-color 0.3s ease; z-index: 1000; padding: 5px 0; min-width: 150px; }
+      .profile-menu.active { display: block; }
+      .profile-menu a { display: block; padding: 10px 15px; color: var(--text); white-space: nowrap; transition: color 0.3s ease, background-color 0.3s ease; }
+      .profile-menu a:hover { background-color: var(--surface); }
+
+      /* RTL styles from home3.html */
+      body[dir="rtl"] .nav-links{ text-align: right; }
+      body[dir="rtl"] .nav{ justify-content: flex-start; }
+      body[dir="rtl"] .dropdown-menu li a{ text-align: right; }
+      body[dir="rtl"] .footer-content > div { text-align: right; }
+      body[dir="rtl"] .footer-content{ grid-template-columns: 1.4fr 1fr 1fr 2fr; }
+      body[dir="rtl"] .footer-bottom { text-align: center; }
+      body[dir="rtl"] .welcome-content { grid-template-columns: 1fr 1.1fr; }
+      body[dir="rtl"] .welcome-text { text-align: right; }
+      body[dir="rtl"] .welcome-features { text-align: right; }
+      body[dir="rtl"] .feature-item { direction: rtl; }
+      body[dir="rtl"] .feature-item i { margin-left: 10px; margin-right: 0; }
+      body[dir="rtl"] .faq-question { direction: rtl; }
+      body[dir="rtl"] .faq-answer { direction: rtl; }
+      body[dir="rtl"] .case-study-grid { text-align: right; }
+      body[dir="rtl"] .section-title { text-align: right; }
+      body[dir="rtl"] .testimonial-text { text-align: right; }
+      body[dir="rtl"] .clients-section .swiper-slide { text-align: right; }
+      body[dir="rtl"] .cta-content { text-align: right; }
+
+      /* ---------- Hero (video + gradient + CTA) ---------- */
+      .hero-section { position:relative; height: 86vh; min-height: 560px; overflow:hidden; border-bottom: 1px solid rgba(255,255,255,.06); }
+      .hero-bg-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter: saturate(110%) contrast(105%); }
+      .hero-gradient { position:absolute; inset:0; background: var(--hero-overlay-dark); transition: background-color 0.3s ease; }
+      /* Animated gradient shimmer on top of overlay */
+      .hero-gradient::after{
+        content:"";
+        position:absolute; inset:0;
+        background: linear-gradient(120deg, rgba(91,140,255,0.12), rgba(0,209,255,0.1), rgba(255,60,172,0.12));
+        background-size: 200% 200%;
+        animation: gradientShift 14s ease infinite;
+        pointer-events: none;
+      }
+      .hero-content { position:relative; z-index:1; height:100%; display:grid; place-items:center; text-align:center; padding: 0 16px; will-change: transform; }
+      .hero-card { max-width: 900px; }
+      .eyebrow { display:inline-flex; gap:8px; align-items:center; padding:6px 10px; border-radius:999px; font-size:.82rem; color: var(--badge-text); background: var(--badge-bg); border:1px solid var(--badge-border); }
+      .hero-title { font-size: clamp(2rem, 5.2vw, 3.6rem); margin:16px 0 10px; line-height:1.05; letter-spacing:-.015em; }
+      .hero-title .cursor { display:inline-block; width:1px; background: currentColor; animation: blink 1.2s steps(1) infinite; transform: translateY(4px); height: 1em;}
+      .hero-sub { font-size: clamp(1rem, 1.8vw, 1.2rem); color: var(--text); margin: 0 0 24px; }
+      .hero-cta { display:inline-flex; gap:12px; }
+      .btn { position: relative; display:inline-flex; align-items:center; gap:10px; padding: 14px 18px; border-radius: 12px; font-weight:700; transition: transform 0.2s ease, box-shadow .2s ease; }
+      .btn-primary { background: linear-gradient(90deg, var(--brand), var(--brand-2)); color:#ffff; box-shadow: 0 8px 20px rgba(34,77,183,.35); overflow:hidden; }
+      .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(34,77,183,.45); }
+      .btn-ghost { background: var(--glass); border:1px solid rgba(255,255,255,.14); color: var(--text); }
+
+      /* ---------- Welcome (split) ---------- */
+      .welcome-image-section { padding: 64px 0; background: radial-gradient(1000px 400px at 10% -10%, rgba(34,77,183,.18), transparent), transparent; }
+      .welcome-content { display:grid; grid-template-columns: 1.1fr 1fr; gap: 36px; align-items:center; }
+      .welcome-text h2 { font-size: clamp(1.6rem, 2.6vw, 2.2rem); margin:0 0 12px; }
+      .welcome-text p { color: var(--muted); margin: 0 0 18px; }
+      .welcome-features { display:grid; gap:12px; }
+      .feature-item { display:flex; align-items:center; gap:10px; font-weight:600; color:var(--text); }
+      .feature-item i { color: var(--accent); }
+      .welcome-image img { border-radius: 16px; box-shadow: var(--shadow); }
+
+      /* New Section Styles */
+      .team-section { padding: 70px 0; background: var(--bg); border-top: 1px solid rgba(255,255,255,.06); }
+      .section-title { text-align:center; margin:0 0 34px; }
+      .section-title h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); margin:0; }
+      .team-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; text-align:center; }
+      .team-card { background: var(--card); padding: 24px; border-radius: 16px; transition: transform .3s ease; box-shadow: var(--shadow); }
+      .team-card:hover { transform: translateY(-6px); }
+      .team-card img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px; }
+      .team-card h3 { margin:0 0 4px; }
+      .team-card p { margin:0; color: var(--muted); }
+
+      .faq-section { padding: 70px 0; }
+      .faq-item { background: var(--card); border: 1px solid rgba(255,255,255,.06); border-radius: 12px; margin-bottom: 16px; overflow: hidden; }
+      .faq-question { padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 1.1rem; }
+      .faq-question i { transition: transform 0.3s ease; }
+      .faq-answer { padding: 0 24px; color: var(--muted); max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, padding 0.4s ease-out; }
+      .faq-item.active .faq-answer { max-height: 200px; padding: 10px 24px 20px; }
+      .faq-item.active .faq-question i { transform: rotate(180deg); }
+
+      /* Case studies section */
+      .case-studies-section { 
+        padding: 70px 0; 
+        background: var(--surface);
+        border-top: 1px solid rgba(255,255,255,.06); 
+        background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+      }
+      .case-study-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 32px; }
+      .case-study-card { background: var(--card); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 32px; box-shadow: var(--shadow); transition: transform .3s ease, box-shadow .3s ease; display: flex; flex-direction: column; text-align: center; will-change: transform; }
+      .case-study-card:hover { transform: translateY(-8px); box-shadow: 0 18px 40px rgba(0,0,0,.5); }
+      .case-study-icon { font-size: 3rem; color: var(--brand-2); margin-bottom: 16px; }
+      .case-study-content h3 { font-size: 1.8rem; margin-top: 0; margin-bottom: 8px; }
+      .case-study-content p { color: var(--muted); }
+      .case-study-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 16px; margin-top: 24px; }
+      .metric { text-align: center; padding: 12px; background: rgba(255,255,255,.05); border-radius: 8px; }
+      .metric-number { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+      .metric-label { font-size: 0.9rem; color: var(--muted); }
+
+      /* Featured */
+      .featured-section { padding: 70px 0; background: linear-gradient(180deg, #0c1018 0%, #0b0f17 100%); border-top: 1px solid rgba(255,255,255,.06); border-bottom: 1px solid rgba(255,255,255,.06); transition: background-color 0.3s ease; }
+      .cards { display:grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+      .card { background: var(--card); border:1px solid rgba(255,255,255,.06); border-radius: 16px; overflow:hidden; box-shadow: var(--shadow); transition: transform .3s ease, box-shadow .3s ease, background-color 0.3s ease; will-change: transform; }
+      .card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(0,0,0,.5); }
+      .card img { height: 220px; width: 100%; object-fit: cover; }
+      .card-body { padding: 18px 18px 16px; }
+      .card-body h3 { margin: 2px 0 6px; font-size: 1.2rem; }
+      .meta { display:flex; align-items:center; gap:10px; color: var(--muted); font-size:.95rem; margin-bottom: 10px; }
+      .badges { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+      .badge { font-size:.8rem; font-weight:600; padding:4px 10px; border-radius:999px; background:rgba(255,255,255,.08); color:var(--text); }
+      .badge-category { background:var(--brand-2); color:#fff; }
+
+      /* Clients section */
+      .clients-section { padding: 70px 0; }
+      .client-logos { display:flex; flex-wrap:wrap; justify-content:center; gap:clamp(16px, 4vw, 36px); padding-top:20px; }
+      .client-logos img { max-height:36px; filter: grayscale(1) contrast(0.5) brightness(1.5); opacity:.8; transition: filter .3s ease; }
+      .client-logos img:hover { filter: grayscale(0) contrast(1) brightness(1); }
+
+      /* Testimonials */
+      .testimonials-section { padding: 70px 0; background: var(--surface); }
+      .testimonial-card { padding: 32px; background: var(--card); border-radius: 16px; box-shadow: var(--shadow); }
+      .testimonial-text { font-size: 1.1rem; line-height: 1.5; color: var(--muted); }
+      .testimonial-author { display:flex; align-items:center; gap:12px; margin-top:20px; }
+      .testimonial-author img { width: 50px; height: 50px; border-radius: 50%; }
+      .author-info h4 { margin:0; font-size: 1rem; }
+      .author-info p { margin:0; font-size: 0.9rem; color: var(--muted); }
+      .swiper-pagination-bullet { background: var(--muted) !important; opacity: 1 !important; }
+      .swiper-pagination-bullet-active { background: var(--brand) !important; }
+      .swiper-button-next, .swiper-button-prev { color: var(--muted) !important; }
+      
+      /* CTA */
+      .cta-section { padding: 70px 0; background: var(--bg); text-align:center; }
+      .cta-card { background: url('https://images.pexels.com/photos/17234673/pexels-photo-17234673/free-photo-of-man-in-white-t-shirt-and-blue-jeans-standing-on-a-road.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') center/cover no-repeat; border-radius: 20px; padding: 60px 24px; color: #fff; position: relative; overflow: hidden; }
+      .cta-card::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.7); z-index: 1; }
+      .cta-content { position: relative; z-index: 2; }
+      .cta-content h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); margin-bottom: 12px; }
+
+      /* --- Footer Styles from home1.html --- */
+      .footer { background: var(--surface); border-top: 1px solid rgba(255,255,255,.06); transition: background-color 0.3s ease; }
+      .footer-content { display:grid; grid-template-columns: 2fr 1fr 1fr 1.4fr; gap: 20px; padding: 46px 0; }
+      .footer h3, .footer h4 { margin-top:0; }
+      .footer p, .footer li { color: var(--muted); transition: color 0.3s ease; }
+      .social-links { display:flex; gap:12px; margin-top:10px; }
+      .social-links a { width:38px; height:38px; display:grid; place-items:center; border-radius:10px; background: var(--glass); border:1px solid var(--glass); transition: background-color 0.3s ease; }
+      .footer ul { list-style:none; padding:0; margin:0; display:grid; gap:8px; }
+      .footer-bottom { border-top:1px solid rgba(255,255,255,.06); text-align:center; padding: 16px 0 22px; color: var(--muted); font-size:.95rem; }
+
+      /* General Utility */
+      .text-center { text-align: center; }
+
+      /* Responsive adjustments */
+      @media (max-width: 900px) {
+        .welcome-content { grid-template-columns: 1fr; }
+        .welcome-image { order: -1; }
+        .case-study-grid { grid-template-columns: 1fr; }
+        .cards { grid-template-columns: 1fr; }
+        .footer-content {
+          display: block;
+          padding: 32px 0;
+        }
+        .footer-content > div {
+          margin-bottom: 24px;
+        }
+        .footer-content > div:last-child {
+          margin-bottom: 0;
+        }
+        .footer h4, .footer h3 {
+          margin-bottom: 12px;
+        }
+        .footer ul {
+          gap: 6px;
+        }
+        .footer-bottom {
+          font-size: 1rem;
+          padding: 12px 0 18px;
+        }
+      }
+      @media (max-width: 780px) {
+  .mobile-menu-toggle { display: block; }
+  .nav { display: none; position: absolute; left: 0; right: 0; top: 100%; background: var(--surface); box-shadow: var(--shadow); padding: 1rem 0; }
+  .nav.open { display: block; }
+  .nav-links { flex-direction: column; align-items: flex-start; padding: 10px 12px 16px; }
+}
+
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container nav-container">
+            <a href="home1.html" class="logo">
+                <img class="logo-img" src="img/cropped-image-removebg-preview-2.png" alt="Stackly Logo">
+            </a>
+            <nav class="nav" id="site-nav">
+                <ul class="nav-links">
+                    <li class="dropdown">
+                        <a href="home1.html" data-i18n="nav.home">Home <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="home1.html" data-i18n="nav.home1">Home 1</a></li>
+                            <li><a href="home3.html" data-i18n="nav.home2">Home 2</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="About us.html" data-i18n="nav.about">About Us</a></li>
+                    <li class="dropdown">
+                        <a href="Services.html" data-i18n="nav.services">Services <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="Services.html" data-i18n="nav.allServices">All Services</a></li>
+                            <li><a href="Book keeping.html" data-i18n="nav.bookkeeping">Bookkeeping</a></li>
+                            <li><a href="Tax.html" data-i18n="nav.taxPlanning">Tax Planning</a></li>
+                            <li><a href="payroll.html" data-i18n="nav.payrollServices">Payroll Services</a></li>
+                            <li><a href="financial-advisory.html" data-i18n="nav.financialReporting">Financial Reporting</a></li>
+                            <li><a href="auditing.html" data-i18n="nav.auditing">Auditing</a></li>
+                            <li><a href="corporate finance.html" data-i18n="nav.corporateFinance">Corporate finance</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="blog.html" data-i18n="nav.blog">Blog</a></li>
+                    <li><a href="contact.html" data-i18n="nav.contact">Contact Us</a></li>
+                    <li class="dropdown">
+                        <a href="signup.html" data-i18n="nav.login">Login <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="login.html" data-i18n="nav.signUpLogin">Sign Up/Login</a></li>
+                            <li><a href="sign admin.html" data-i18n="nav.adminLogin">Admin Login</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <div class="nav-right">
+                <div class="profile-container" style="position: relative;">
+                  <button id="profile-btn" class="profile-icon">
+                    <span id="initials-display"></span>
+                  </button>
+                  <div class="profile-menu" id="profile-dropdown">
+                    <a href="login.html" id="logout-btn" data-i18n="nav.logout">Logout</a>
+                  </div>
+                </div>
+                <div class="theme-toggle">
+                  <button id="theme-toggle" class="btn btn-secondary">
+                    <i class="fas fa-moon"></i>
+                  </button>
+                </div>
+                <div class="language-selector">
+                  <i class="fas fa-globe"></i>
+                  <select id="language-select"></select>
+                </div>
+                <div class="mobile-menu-toggle" id="mobile-toggle">
+                  <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-bg-video">
+            <video autoplay loop muted playsinline>
+                <source src="https://www.pexels.com/download/video/6929602/" type="video/mp4">
+            </video>
+        </div>
+        <div class="hero-gradient"></div>
+        <div class="container hero-content">
+            <div class="hero-card" data-aos="fade-up" data-aos-duration="1000">
+                <span class="eyebrow" data-i18n="hero.eyebrow">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Your Trusted Finance Partner
+                </span>
+                <h1 class="hero-title" data-i18n="hero.heading">
+                    We Build Financial Success.
+                </h1>
+                <p class="hero-sub" data-i18n="hero.subheading">
+                    Expert accounting, tax, and advisory services to help you build and manage wealth.
+                </p>
+                <div class="hero-cta">
+                    <a href="Services.html" class="btn btn-primary" data-i18n="hero.primaryButton">
+                        <i class="fa-solid fa-hand-holding-dollar"></i> Get Started
+                    </a>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="welcome-image-section">
+        <div class="container welcome-content">
+            <div class="welcome-text" data-aos="fade-right" data-aos-duration="1000">
+                <span class="eyebrow" data-i18n="welcome.eyebrow">Who We Are</span>
+                <h2 data-i18n="welcome.heading">Your Partner in Financial Growth.</h2>
+                <p data-i18n="welcome.p1">At Stackly Finance, we provide more than just accounting. We are your strategic partners, dedicated to helping your business navigate financial complexities and achieve sustainable growth. Our team of experts offers personalized solutions tailored to your unique needs.</p>
+                <p data-i18n="welcome.p2">With a focus on proactive advice and seamless service, we empower you to make informed decisions and focus on what you do best—running your business.</p>
+                <div class="welcome-features">
+                    <div class="feature-item"><i class="fas fa-check-circle"></i><span data-i18n="welcome.feature1">Trusted Expertise</span></div>
+                    <div class="feature-item"><i class="fas fa-check-circle"></i><span data-i18n="welcome.feature2">Proactive Financial Advice</span></div>
+                    <div class="feature-item"><i class="fas fa-check-circle"></i><span data-i18n="welcome.feature3">Customized Solutions</span></div>
+                </div>
+            </div>
+            <div class="welcome-image" data-aos="fade-left" data-aos-duration="1000">
+                <img src="https://cdn.pixabay.com/photo/2015/07/17/22/43/student-849826_1280.jpg" alt="Financial professionals working">
+            </div>
+        </div>
+    </section>
+
+    <section class="team-section">
+      <div class="container">
+        <div class="section-title">
+          <span class="eyebrow" data-i18n="team.eyebrow">Our Leadership</span>
+          <h2 data-i18n="team.heading">Meet Our Experts</h2>
+        </div>
+        <div class="team-grid">
+          <div class="team-card"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rakesh Kumar"><h3 data-i18n="team.member1.name">Rakesh Kumar</h3><p data-i18n="team.member1.title">Chartered Accountant</p></div>
+          <div class="team-card"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Anjali Mehta"><h3 data-i18n="team.member2.name">Anjali Mehta</h3><p data-i18n="team.member2.title">Financial Planner</p></div>
+          <div class="team-card"><img src="https://randomuser.me/api/portraits/men/55.jpg" alt="Vivek Singh"><h3 data-i18n="team.member3.name">Vivek Singh</h3><p data-i18n="team.member3.title">Investment Advisor</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq-section">
+      <div class="container">
+        <div class="section-title">
+          <span class="eyebrow" data-i18n="faq.eyebrow">Got Questions?</span>
+          <h2 data-i18n="faq.heading">Frequently Asked Questions</h2>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question" data-i18n="faq.q1">
+              What types of businesses do you serve?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer" data-i18n="faq.a1">
+              We work with a wide range of businesses, from startups and small enterprises to established corporations across various industries, including tech, retail, and manufacturing.
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question" data-i18n="faq.q2">
+              How do I get started with your services?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer" data-i18n="faq.a2">
+              The first step is a free consultation. You can book one through our website's contact page, and we'll discuss your needs to create a tailored plan.
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question" data-i18n="faq.q3">
+              Are my financial data and information secure?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer" data-i18n="faq.a3">
+              We use state-of-the-art security protocols and encryption to ensure that all your sensitive financial information is kept completely confidential and secure.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-studies-section">
+        <div class="container">
+            <div class="section-title">
+              <span class="eyebrow" data-i18n="caseStudies.eyebrow">Success Stories</span>
+              <h2 data-i18n="caseStudies.heading">Results We've Achieved</h2>
+            </div>
+            <div class="case-study-grid">
+                <div class="case-study-card">
+                    <div class="case-study-icon"><i class="fa-solid fa-seedling"></i></div>
+                    <div class="case-study-content">
+                        <h3 data-i18n="caseStudies.study1.title">Start-Up A: From Idea to IPO</h3>
+                        <p data-i18n="caseStudies.study1.description">Helped a new tech company structure its finances, manage a seed round, and prepare for rapid scaling, leading to a successful public offering.</p>
+                    </div>
+                    <div class="case-study-metrics">
+                        <div class="metric"><div class="metric-number">350%</div><div class="metric-label" data-i18n="caseStudies.study1.metric1">Revenue Growth</div></div>
+                        <div class="metric"><div class="metric-number">95%</div><div class="metric-label" data-i18n="caseStudies.study1.metric2">Compliance Rating</div></div>
+                    </div>
+                </div>
+                <div class="case-study-card">
+                    <div class="case-study-icon"><i class="fa-solid fa-house-circle-check"></i></div>
+                    <div class="case-study-content">
+                        <h3 data-i18n="caseStudies.study2.title">Retailer B: Optimized Operations</h3>
+                        <p data-i18n="caseStudies.study2.description">Analyzed financial data to identify inefficiencies, leading to optimized inventory management and a significant boost in profit margins.</p>
+                    </div>
+                    <div class="case-study-metrics">
+                        <div class="metric"><div class="metric-number">30%</div><div class="metric-label" data-i18n="caseStudies.study2.metric1">Profit Margin Increase</div></div>
+                        <div class="metric"><div class="metric-number">40%</div><div class="metric-label" data-i18n="caseStudies.study2.metric2">Operational Savings</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-section">
+      <div class="container">
+          <div class="section-title">
+            <span class="eyebrow" data-i18n="blog.eyebrow">Insights & Knowledge</span>
+            <h2 data-i18n="blog.heading">Latest Financial Insights</h2>
+          </div>
+          <div class="cards">
+              <div class="card" data-aos="fade-up" data-aos-duration="1000">
+                  <img src="https://images.pexels.com/photos/6863116/pexels-photo-6863116.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="People discussing financial plans">
+                  <div class="card-body">
+                      <div class="meta">
+                          <i class="fa-regular fa-calendar"></i>
+                          <span data-i18n="blog.post1.date">Dec 1, 2024</span>
+                          <i class="fa-regular fa-folder-open"></i>
+                          <span data-i18n="blog.post1.category">Tax</span>
+                      </div>
+                      <h3 data-i18n="blog.post1.title">5 Tax Planning Strategies for Small Businesses</h3>
+                      <p style="color:var(--muted); font-size: 0.95rem; margin-bottom: 8px;" data-i18n="blog.post1.excerpt">Learn how to minimize your tax liability and maximize your savings with these expert tips.</p>
+                      <a href="blog-post-1.html" class="btn btn-primary" style="padding:10px 14px; font-size:0.9rem; margin-top:8px;" data-i18n="blog.post1.button">Read More</a>
+                  </div>
+              </div>
+              <div class="card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                  <img src="https://images.pexels.com/photos/3862632/pexels-photo-3862632.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Graphs and data on a monitor">
+                  <div class="card-body">
+                      <div class="meta">
+                          <i class="fa-regular fa-calendar"></i>
+                          <span data-i18n="blog.post2.date">Nov 22, 2024</span>
+                          <i class="fa-regular fa-folder-open"></i>
+                          <span data-i18n="blog.post2.category">Strategy</span>
+                      </div>
+                      <h3 data-i18n="blog.post2.title">Forecasting Your Business's Financial Future</h3>
+                      <p style="color:var(--muted); font-size: 0.95rem; margin-bottom: 8px;" data-i18n="blog.post2.excerpt">A step-by-step guide to creating accurate financial forecasts to plan for success.</p>
+                      <a href="blog-post-2.html" class="btn btn-primary" style="padding:10px 14px; font-size:0.9rem; margin-top:8px;" data-i18n="blog.post2.button">Read More</a>
+                  </div>
+              </div>
+              <div class="card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+                  <img src="https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="A team celebrating a success">
+                  <div class="card-body">
+                      <div class="meta">
+                          <i class="fa-regular fa-calendar"></i>
+                          <span data-i18n="blog.post3.date">Nov 15, 2024</span>
+                          <i class="fa-regular fa-folder-open"></i>
+                          <span data-i18n="blog.post3.category">Management</span>
+                      </div>
+                      <h3 data-i18n="blog.post3.title">Payroll Management: The Easy Way</h3>
+                      <p style="color:var(--muted); font-size: 0.95rem; margin-bottom: 8px;" data-i18n="blog.post3.excerpt">Simplify your payroll process and stay compliant with our expert tips and software recommendations.</p>
+                      <a href="blog-post-3.html" class="btn btn-primary" style="padding:10px 14px; font-size:0.9rem; margin-top:8px;" data-i18n="blog.post3.button">Read More</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </section>
+
+    <section class="clients-section">
+      <div class="container text-center">
+        <span class="eyebrow" data-i18n="clients.eyebrow">Our Partners</span>
+        <h2 data-i18n="clients.heading">Trusted by Leading Businesses</h2>
+        <div class="client-logos">
+          <img src="img/logo-1.svg" alt="Client Logo 1">
+          <img src="img/logo-2.svg" alt="Client Logo 2">
+          <img src="img/logo-3.svg" alt="Client Logo 3">
+          <img src="img/logo-4.svg" alt="Client Logo 4">
+          <img src="img/logo-5.svg" alt="Client Logo 5">
+        </div>
+      </div>
+    </section>
+
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="section-title">
+              <span class="eyebrow" data-i18n="testimonials.eyebrow">Testimonials</span>
+              <h2 data-i18n="testimonials.heading">What Our Clients Say</h2>
+            </div>
+            <div class="swiper testimonials-slider">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="testimonial-card">
+                            <div class="stars" style="color: var(--accent); font-size: 1.2rem; margin-bottom: 12px;">★★★★★</div>
+                            <p class="testimonial-text" data-i18n="testimonials.quote1">"Stackly Finance has transformed our financial operations. Their proactive advice and strategic planning have been invaluable to our growth."</p>
+                            <div class="testimonial-author">
+                                <img src="https://randomuser.me/api/portraits/men/7.jpg" alt="Client Avatar">
+                                <div class="author-info">
+                                    <h4 data-i18n="testimonials.author1.name">John Smith</h4>
+                                    <p data-i18n="testimonials.author1.company">CEO, Innovatech Solutions</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="testimonial-card">
+                            <div class="stars" style="color: var(--accent); font-size: 1.2rem; margin-bottom: 12px;">★★★★★</div>
+                            <p class="testimonial-text" data-i18n="testimonials.quote2">"We've seen a significant increase in our profit margins since we started working with Stackly Finance. Their expertise is unmatched."</p>
+                            <div class="testimonial-author">
+                                <img src="https://randomuser.me/api/portraits/women/12.jpg" alt="Client Avatar">
+                                <div class="author-info">
+                                    <h4 data-i18n="testimonials.author2.name">Jane Doe</h4>
+                                    <p data-i18n="testimonials.author2.company">Founder, Global Ventures</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="testimonial-card">
+                            <div class="stars" style="color: var(--accent); font-size: 1.2rem; margin-bottom: 12px;">★★★★★</div>
+                            <p class="testimonial-text" data-i18n="testimonials.quote3">"The team at Stackly Finance provides clear, actionable advice that has helped us make smarter financial decisions. Highly recommend!"</p>
+                            <div class="testimonial-author">
+                                <img src="https://randomuser.me/api/portraits/men/15.jpg" alt="Client Avatar">
+                                <div class="author-info">
+                                    <h4 data-i18n="testimonials.author3.name">Michael Chen</h4>
+                                    <p data-i18n="testimonials.author3.company">CFO, Apex Logistics</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-card">
+          <div class="cta-content">
+            <h2 data-i18n="cta.heading">Ready to Grow Your Business?</h2>
+            <p style="color:#ddd; margin-bottom: 24px;" data-i18n="cta.subheading">Let's discuss how we can help you achieve your financial goals.</p>
+            <a href="contact.html" class="btn btn-primary" data-i18n="cta.button">
+              <i class="fa-solid fa-phone"></i>
+              Book a Free Consultation
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <img class="logo-img" src="img/cropped-image-removebg-preview-2.png" alt="Stackly Logo">
+                    <p data-i18n="footer.aboutText">Your trusted partner in financial growth. We provide specialized accounting and advisory solutions to help your business thrive.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 data-i18n="footer.quickLinks">Quick Links</h4>
+                    <ul>
+                        <li><a href="home1.html" data-i18n="nav.home">Home</a></li>
+                        <li><a href="About us.html" data-i18n="nav.about">About Us</a></li>
+                        <li><a href="Services.html" data-i18n="nav.services">Services</a></li>
+                        <li><a href="blog.html" data-i18n="nav.blog">Blog</a></li>
+                        <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 data-i18n="footer.services">Services</h4>
+                    <ul>
+                      <li><a href="Book keeping.html" data-i18n="nav.bookkeeping">Bookkeeping</a></li>
+                      <li><a href="Tax.html" data-i18n="nav.taxPlanning">Tax Planning</a></li>
+                      <li><a href="payroll.html" data-i18n="nav.payrollServices">Payroll Services</a></li>
+                      <li><a href="financial-advisory.html" data-i18n="nav.financialReporting">Financial Reporting</a></li>
+                      <li><a href="auditing.html" data-i18n="nav.auditing">Auditing</a></li>
+                      <li><a href="corporate finance.html" data-i18n="nav.corporateFinance">Corporate finance</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 data-i18n="footer.contactInfo">Contact Info</h4>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> <span data-i18n="footer.address">456 Financial Ave, Fiscal City, State 67890</span></li>
+                        <li><i class="fas fa-phone"></i> <span data-i18n="footer.phone">(555) 987-6543</span></li>
+                        <li><i class="fas fa-envelope"></i> <span data-i18n="footer.email">info@stacklyfinance.com</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom"><span data-i18n="footer.copyright">&copy; 2025 Stackly Finance & Accounting. All rights reserved.</span></div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    <script>
+      // --- Scripts for header/footer and functionality from both files ---
+      const mobileToggle = document.getElementById('mobile-toggle');
+      const nav = document.getElementById('site-nav');
+      mobileToggle?.addEventListener('click', ()=> nav.classList.toggle('open'));
+
+      document.getElementById('theme-toggle')?.addEventListener('click', ()=>{
+        document.body.classList.toggle('light');
+      });
+
+      const profileBtn = document.getElementById('profile-btn');
+      const profileDropdown = document.getElementById('profile-dropdown');
+      const initialsDisplay = document.getElementById('initials-display');
+      const logoutBtn = document.getElementById('logout-btn');
+
+      function updateProfileButton() {
+        const userData = JSON.parse(localStorage.getItem('userData') || "{}");
+        if (userData && userData.firstName && userData.lastName) {
+          const initials = `${userData.firstName.charAt(0)}${userData.lastName.charAt(0)}`.toUpperCase();
+          initialsDisplay.textContent = initials;
+          profileBtn.style.display = 'flex';
+        } else {
+          profileBtn.style.display = 'none';
+        }
+      }
+
+      function toggleDropdown() { profileDropdown.classList.toggle('active'); }
+      function handleLogout() {
+        localStorage.removeItem('userData'); localStorage.removeItem('isLoggedIn');
+        const messageBox = document.createElement('div');
+        messageBox.innerHTML = 'Logged out successfully! <i class="fas fa-check-circle"></i>';
+        messageBox.style.cssText = `
+          position: fixed; top: 20px; right: 20px; background-color: var(--brand); color: white;
+          padding: 15px 25px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,.2);
+          z-index: 9999; display: flex; align-items: center; gap: 10px; animation: fadeOut 3s forwards;
+        `;
+        document.body.appendChild(messageBox);
+        const styleSheet = document.createElement("style");
+        styleSheet.innerText = `
+          @keyframes fadeOut { 0% { opacity: 1; transform: translateY(0);} 80% { opacity: 1; } 100% { opacity: 0; transform: translateY(-20px);} }
+        `;
+        document.head.appendChild(styleSheet);
+        setTimeout(() => { window.location.href = 'login.html'; }, 2000);
+      }
+
+      profileBtn?.addEventListener('click', (e) => { e.stopPropagation(); toggleDropdown(); });
+      logoutBtn?.addEventListener('click', handleLogout);
+      document.addEventListener('click', (e) => {
+        if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) profileDropdown.classList.remove('active');
+      });
+
+      document.querySelectorAll('.faq-question').forEach(item => {
+        item.addEventListener('click', () => {
+          const parent = item.parentElement;
+          parent.classList.toggle('active');
+          const answer = parent.querySelector('.faq-answer');
+          if (parent.classList.contains('active')) {
+            answer.style.maxHeight = answer.scrollHeight + "px";
+          } else {
+            answer.style.maxHeight = null;
+          }
+        });
+      });
+
+      const swiper = new Swiper('.testimonials-slider', {
+          slidesPerView: 1,
+          spaceBetween: 30,
+          loop: true,
+          pagination: {
+              el: '.swiper-pagination',
+              clickable: true,
+          },
+          navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+          },
+          breakpoints: {
+              992: {
+                  slidesPerView: 3,
+                  spaceBetween: 30,
+              },
+              768: {
+                  slidesPerView: 2,
+                  spaceBetween: 20,
+              }
+          }
+      });
+      document.querySelectorAll('.nav-links .dropdown > a').forEach(function(dropdownToggle) {
+        dropdownToggle.addEventListener('click', function(e) {
+          if (window.innerWidth <= 780) {
+            e.preventDefault();
+            const dropdownMenu = this.nextElementSibling;
+            if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
+              dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+            }
+          }
+        });
+      });
+      window.addEventListener('resize', function() {
+        if (window.innerWidth > 780) {
+          document.querySelectorAll('.dropdown-menu').forEach(menu => { menu.style.display = ''; });
+        }
+      });
+
+      // New JavaScript to dynamically populate the language dropdown and change content
+      const languages = {
+        'en': 'English',
+        'he': 'Hebrew',
+        'ar': 'Arabic'
+      };
+      
+      const translations = {
+        'en': {
+          'title': 'Stackly Finance & Accounting - Business Growth',
+          'nav.home': 'Home',
+          'nav.home1': 'Home 1',
+          'nav.home2': 'Home 2',
+          'nav.about': 'About Us',
+          'nav.services': 'Services',
+          'nav.allServices': 'All Services',
+          'nav.bookkeeping': 'Bookkeeping',
+          'nav.taxPlanning': 'Tax Planning',
+          'nav.payrollServices': 'Payroll Services',
+          'nav.financialReporting': 'Financial Reporting',
+          'nav.auditing': 'Auditing',
+          'nav.corporateFinance': 'Corporate finance',
+          'nav.blog': 'Blog',
+          'nav.contact': 'Contact Us',
+          'nav.login': 'Login',
+          'nav.signUpLogin': 'Sign Up/Login',
+          'nav.adminLogin': 'Admin Login',
+          'nav.logout': 'Logout',
+          'hero.eyebrow': 'Your Trusted Finance Partner',
+          'hero.heading': 'We Build Financial Success.',
+          'hero.subheading': 'Expert accounting, tax, and advisory services to help you build and manage wealth.',
+          'hero.primaryButton': 'Get Started',
+          'hero.secondaryButton': 'Contact Us',
+          'welcome.eyebrow': 'Who We Are',
+          'welcome.heading': 'Your Partner in Financial Growth.',
+          'welcome.p1': 'At Stackly Finance, we provide more than just accounting. We are your strategic partners, dedicated to helping your business navigate financial complexities and achieve sustainable growth. Our team of experts offers personalized solutions tailored to your unique needs.',
+          'welcome.p2': 'With a focus on proactive advice and seamless service, we empower you to make informed decisions and focus on what you do best—running your business.',
+          'welcome.feature1': 'Trusted Expertise',
+          'welcome.feature2': 'Proactive Financial Advice',
+          'welcome.feature3': 'Customized Solutions',
+          'team.eyebrow': 'Our Leadership',
+          'team.heading': 'Meet Our Experts',
+          'team.member1.name': 'Rakesh Kumar',
+          'team.member1.title': 'Chartered Accountant',
+          'team.member2.name': 'Anjali Mehta',
+          'team.member2.title': 'Financial Planner',
+          'team.member3.name': 'Vivek Singh',
+          'team.member3.title': 'Investment Advisor',
+          'faq.eyebrow': 'Got Questions?',
+          'faq.heading': 'Frequently Asked Questions',
+          'faq.q1': 'What types of businesses do you serve?',
+          'faq.a1': 'We work with a wide range of businesses, from startups and small enterprises to established corporations across various industries, including tech, retail, and manufacturing.',
+          'faq.q2': 'How do I get started with your services?',
+          'faq.a2': 'The first step is a free consultation. You can book one through our website\'s contact page, and we\'ll discuss your needs to create a tailored plan.',
+          'faq.q3': 'Are my financial data and information secure?',
+          'faq.a3': 'We use state-of-the-art security protocols and encryption to ensure that all your sensitive financial information is kept completely confidential and secure.',
+          'caseStudies.eyebrow': 'Success Stories',
+          'caseStudies.heading': 'Results We\'ve Achieved',
+          'caseStudies.study1.title': 'Start-Up A: From Idea to IPO',
+          'caseStudies.study1.description': 'Helped a new tech company structure its finances, manage a seed round, and prepare for rapid scaling, leading to a successful public offering.',
+          'caseStudies.study1.metric1': 'Revenue Growth',
+          'caseStudies.study1.metric2': 'Compliance Rating',
+          'caseStudies.study2.title': 'Retailer B: Optimized Operations',
+          'caseStudies.study2.description': 'Analyzed financial data to identify inefficiencies, leading to optimized inventory management and a significant boost in profit margins.',
+          'caseStudies.study2.metric1': 'Profit Margin Increase',
+          'caseStudies.study2.metric2': 'Operational Savings',
+          'blog.eyebrow': 'Insights & Knowledge',
+          'blog.heading': 'Latest Financial Insights',
+          'blog.post1.date': 'Dec 1, 2024',
+          'blog.post1.category': 'Tax',
+          'blog.post1.title': '5 Tax Planning Strategies for Small Businesses',
+          'blog.post1.excerpt': 'Learn how to minimize your tax liability and maximize your savings with these expert tips.',
+          'blog.post1.button': 'Read More',
+          'blog.post2.date': 'Nov 22, 2024',
+          'blog.post2.category': 'Strategy',
+          'blog.post2.title': 'Forecasting Your Business\'s Financial Future',
+          'blog.post2.excerpt': 'A step-by-step guide to creating accurate financial forecasts to plan for success.',
+          'blog.post2.button': 'Read More',
+          'blog.post3.date': 'Nov 15, 2024',
+          'blog.post3.category': 'Management',
+          'blog.post3.title': 'Payroll Management: The Easy Way',
+          'blog.post3.excerpt': 'Simplify your payroll process and stay compliant with our expert tips and software recommendations.',
+          'blog.post3.button': 'Read More',
+          'clients.eyebrow': 'Our Partners',
+          'clients.heading': 'Trusted by Leading Businesses',
+          'testimonials.eyebrow': 'Testimonials',
+          'testimonials.heading': 'What Our Clients Say',
+          'testimonials.quote1': 'Stackly Finance has transformed our financial operations. Their proactive advice and strategic planning have been invaluable to our growth.',
+          'testimonials.author1.name': 'John Smith',
+          'testimonials.author1.company': 'CEO, Innovatech Solutions',
+          'testimonials.quote2': 'We\'ve seen a significant increase in our profit margins since we started working with Stackly Finance. Their expertise is unmatched.',
+          'testimonials.author2.name': 'Jane Doe',
+          'testimonials.author2.company': 'Founder, Global Ventures',
+          'testimonials.quote3': 'The team at Stackly Finance provides clear, actionable advice that has helped us make smarter financial decisions. Highly recommend!',
+          'testimonials.author3.name': 'Michael Chen',
+          'testimonials.author3.company': 'CFO, Apex Logistics',
+          'cta.heading': 'Ready to Grow Your Business?',
+          'cta.subheading': 'Let\'s discuss how we can help you achieve your financial goals.',
+          'cta.button': 'Book a Free Consultation',
+          'footer.aboutText': 'Your trusted partner in financial growth. We provide specialized accounting and advisory solutions to help your business thrive.',
+          'footer.quickLinks': 'Quick Links',
+          'footer.services': 'Services',
+          'footer.contactInfo': 'Contact Info',
+          'footer.address': '456 Financial Ave, Fiscal City, State 67890',
+          'footer.phone': '(555) 987-6543',
+          'footer.email': 'info@stacklyfinance.com',
+          'footer.copyright': '© 2025 Stackly Finance & Accounting. All rights reserved.',
+        },
+        'he': {
+          'title': 'סטקלי פיננסים וחשבונאות - צמיחה עסקית',
+          'nav.home': 'בית',
+          'nav.home1': 'בית 1',
+          'nav.home2': 'בית 2',
+          'nav.about': 'אודות',
+          'nav.services': 'שירותים',
+          'nav.allServices': 'כל השירותים',
+          'nav.bookkeeping': 'ניהול חשבונות',
+          'nav.taxPlanning': 'תכנון מס',
+          'nav.payrollServices': 'שירותי שכר',
+          'nav.financialReporting': 'דוחות כספיים',
+          'nav.auditing': 'ביקורת',
+          'nav.corporateFinance': 'מימון תאגידי',
+          'nav.blog': 'בלוג',
+          'nav.contact': 'צור קשר',
+          'nav.login': 'התחבר',
+          'nav.signUpLogin': 'הירשם / התחבר',
+          'nav.adminLogin': 'התחברות למנהל',
+          'nav.logout': 'התנתק',
+          'hero.eyebrow': 'שותף הפיננסים המהימן שלך',
+          'hero.heading': 'אנו בונים הצלחה פיננסית.',
+          'hero.subheading': 'שירותי חשבונאות, מיסוי וייעוץ מקצועיים שיעזרו לך לבנות ולנהל עושר.',
+          'hero.primaryButton': 'התחל עכשיו',
+          'hero.secondaryButton': 'צור קשר',
+          'welcome.eyebrow': 'מי אנחנו',
+          'welcome.heading': 'השותף שלך לצמיחה פיננסית.',
+          'welcome.p1': 'בסטקלי פיננסים, אנו מספקים יותר מסתם שירותי חשבונאות. אנו שותפיך האסטרטגיים, המוקדשים לעזור לעסק שלך לנווט במורכבויות פיננסיות ולהשיג צמיחה בת קיימא. צוות המומחים שלנו מציע פתרונות מותאמים אישית לצרכים הייחודיים שלך.',
+          'welcome.p2': 'עם דגש על ייעוץ יזום ושירות חלק, אנו מעצימים אותך לקבל החלטות מושכלות ולהתמקד במה שאתה עושה הכי טוב - ניהול העסק שלך.',
+          'welcome.feature1': 'מומחיות מהימנה',
+          'welcome.feature2': 'ייעוץ פיננסי יזום',
+          'welcome.feature3': 'פתרונות מותאמים אישית',
+          'team.eyebrow': 'ההנהגה שלנו',
+          'team.heading': 'הכירו את המומחים שלנו',
+          'team.member1.name': 'ראקש קומאר',
+          'team.member1.title': 'רואה חשבון מוסמך',
+          'team.member2.name': 'אנג\'לי מהטה',
+          'team.member2.title': 'מתכננת פיננסית',
+          'team.member3.name': 'ויווק סינג',
+          'team.member3.title': 'יועץ השקעות',
+          'faq.eyebrow': 'יש לך שאלות?',
+          'faq.heading': 'שאלות נפוצות',
+          'faq.q1': 'אילו סוגי עסקים אתם משרתים?',
+          'faq.a1': 'אנו עובדים עם מגוון רחב של עסקים, מסטארט-אפים ועסקים קטנים ועד תאגידים מבוססים בתעשיות שונות, כולל טכנולוגיה, קמעונאות וייצור.',
+          'faq.q2': 'כיצד אני מתחיל עם השירותים שלכם?',
+          'faq.a2': 'הצעד הראשון הוא ייעוץ חינם. תוכל להזמין אחד דרך דף יצירת הקשר באתר שלנו, ואנו נדון בצרכים שלך כדי ליצור תוכנית מותאמת אישית.',
+          'faq.q3': 'האם הנתונים והמידע הפיננסיים שלי מאובטחים?',
+          'faq.a3': 'אנו משתמשים בפרוטוקולי אבטחה ובהצפנה מתקדמים כדי להבטיח שכל המידע הפיננסי הרגיש שלך יישאר חסוי ומאובטח לחלוטין.',
+          'caseStudies.eyebrow': 'סיפורי הצלחה',
+          'caseStudies.heading': 'תוצאות שהשגנו',
+          'caseStudies.study1.title': 'סטארט-אפ A: מרעיון להנפקה',
+          'caseStudies.study1.description': 'עזרנו לחברת טכנולוגיה חדשה לבנות את המבנה הפיננסי שלה, לנהל סבב השקעה ראשוני, ולהתכונן לצמיחה מהירה, שהובילה להנפקה מוצלחת.',
+          'caseStudies.study1.metric1': 'צמיחה בהכנסות',
+          'caseStudies.study1.metric2': 'דירוג ציות',
+          'caseStudies.study2.title': 'קמעונאי B: אופטימיזציה של פעולות',
+          'caseStudies.study2.description': 'ניתחנו נתונים פיננסיים כדי לזהות חוסר יעילות, מה שהוביל לאופטימיזציה של ניהול מלאי ועלייה משמעותית בשולי הרווח.',
+          'caseStudies.study2.metric1': 'עלייה בשולי רווח',
+          'caseStudies.study2.metric2': 'חיסכון תפעולי',
+          'blog.eyebrow': 'תובנות וידע',
+          'blog.heading': 'תובנות פיננסיות עדכניות',
+          'blog.post1.date': '1 בדצמבר 2024',
+          'blog.post1.category': 'מס',
+          'blog.post1.title': '5 אסטרטגיות תכנון מס לעסקים קטנים',
+          'blog.post1.excerpt': 'למד כיצד למזער את חבות המס שלך ולמקסם את החיסכון שלך עם טיפים מומחים אלה.',
+          'blog.post1.button': 'קרא עוד',
+          'blog.post2.date': '22 בנובמבר 2024',
+          'blog.post2.category': 'אסטרטגיה',
+          'blog.post2.title': 'חיזוי העתיד הפיננסי של העסק שלך',
+          'blog.post2.excerpt': 'מדריך צעד-אחר-צעד ליצירת תחזיות פיננסיות מדויקות לתכנון הצלחה.',
+          'blog.post2.button': 'קרא עוד',
+          'blog.post3.date': '15 בנובמבר 2024',
+          'blog.post3.category': 'ניהול',
+          'blog.post3.title': 'ניהול שכר: הדרך הקלה',
+          'blog.post3.excerpt': 'פשט את תהליך השכר שלך והישאר תואם עם טיפים מומחים והמלצות תוכנה.',
+          'blog.post3.button': 'קרא עוד',
+          'clients.eyebrow': 'השותפים שלנו',
+          'clients.heading': 'אמינים על ידי עסקים מובילים',
+          'testimonials.eyebrow': 'עדויות',
+          'testimonials.heading': 'מה לקוחותינו אומרים',
+          'testimonials.quote1': 'סטקלי פיננסים שינתה את הפעילות הפיננסית שלנו. הייעוץ היזום והתכנון האסטרטגי שלהם היו בעלי ערך רב לצמיחה שלנו.',
+          'testimonials.author1.name': 'ג\'ון סמית\'',
+          'testimonials.author1.company': 'מנכ"ל, Innovatech Solutions',
+          'testimonials.quote2': 'ראינו עלייה משמעותית בשולי הרווח שלנו מאז שהתחלנו לעבוד עם סטקלי פיננסים. המומחיות שלהם ללא תחרות.',
+          'testimonials.author2.name': 'ג\'יין דו',
+          'testimonials.author2.company': 'מייסדת, Global Ventures',
+          'testimonials.quote3': 'הצוות בסטקלי פיננסים מספק ייעוץ ברור וניתן לפעולה, שעזר לנו לקבל החלטות פיננסיות חכמות יותר. ממליץ בחום!',
+          'testimonials.author3.name': 'מייקל צ\'ן',
+          'testimonials.author3.company': 'סמנכ"ל כספים, Apex Logistics',
+          'cta.heading': 'מוכנים להצמיח את העסק שלכם?',
+          'cta.subheading': 'בואו נדון כיצד נוכל לעזור לכם להשיג את היעדים הפיננסיים שלכם.',
+          'cta.button': 'קבעו פגישת ייעוץ חינם',
+          'footer.aboutText': 'השותף המהימן שלך לצמיחה פיננסית. אנו מספקים פתרונות חשבונאות וייעוץ מיוחדים כדי לעזור לעסק שלך לשגשג.',
+          'footer.quickLinks': 'קישורים מהירים',
+          'footer.services': 'שירותים',
+          'footer.contactInfo': 'פרטי התקשרות',
+          'footer.address': '456 פיננסיהל אווניו, פיסקאל סיטי, סטייט 67890',
+          'footer.phone': '(555) 987-6543',
+          'footer.email': 'info@stacklyfinance.com',
+          'footer.copyright': '© 2025 סטקלי פיננסים וחשבונאות. כל הזכויות שמורות.',
+        },
+        'ar': {
+          'title': 'ستكلي للتمويل والمحاسبة - نمو الأعمال',
+          'nav.home': 'الرئيسية',
+          'nav.home1': 'الرئيسية 1',
+          'nav.home2': 'الرئيسية 2',
+          'nav.about': 'من نحن',
+          'nav.services': 'الخدمات',
+          'nav.allServices': 'جميع الخدمات',
+          'nav.bookkeeping': 'مسك الدفاتر',
+          'nav.taxPlanning': 'التخطيط الضريبي',
+          'nav.payrollServices': 'خدمات الرواتب',
+          'nav.financialReporting': 'التقارير المالية',
+          'nav.auditing': 'التدقيق',
+          'nav.corporateFinance': 'التمويل المؤسسي',
+          'nav.blog': 'المدونة',
+          'nav.contact': 'اتصل بنا',
+          'nav.login': 'تسجيل الدخول',
+          'nav.signUpLogin': 'التسجيل/الدخول',
+          'nav.adminLogin': 'تسجيل دخول المسؤول',
+          'nav.logout': 'تسجيل الخروج',
+          'hero.eyebrow': 'شريكك المالي الموثوق',
+          'hero.heading': 'نحن نبني النجاح المالي.',
+          'hero.subheading': 'خدمات محاسبية وضريبية واستشارية متخصصة لمساعدتك في بناء وإدارة الثروة.',
+          'hero.primaryButton': 'ابدأ الآن',
+          'hero.secondaryButton': 'اتصل بنا',
+          'welcome.eyebrow': 'من نحن',
+          'welcome.heading': 'شريكك في النمو المالي.',
+          'welcome.p1': 'في ستكلي للتمويل، نقدم أكثر من مجرد المحاسبة. نحن شركاؤك الاستراتيجيون، المكرسون لمساعدة عملك على التغلب على التعقيدات المالية وتحقيق نمو مستدام. يقدم فريق الخبراء لدينا حلولاً شخصية مصممة خصيصًا لتلبية احتياجاتك الفريدة.',
+          'welcome.p2': 'مع التركيز على المشورة الاستباقية والخدمة السلسة، نمكنك من اتخاذ قرارات مستنيرة والتركيز على ما تتقنه - إدارة عملك.',
+          'welcome.feature1': 'خبرة موثوقة',
+          'welcome.feature2': 'مشورة مالية استباقية',
+          'welcome.feature3': 'حلول مخصصة',
+          'team.eyebrow': 'قيادتنا',
+          'team.heading': 'تعرف على خبرائنا',
+          'team.member1.name': 'راكش كومار',
+          'team.member1.title': 'محاسب قانوني',
+          'team.member2.name': 'أنجالي مهتا',
+          'team.member2.title': 'مخطط مالي',
+          'team.member3.name': 'فيفيك سينغ',
+          'team.member3.title': 'مستشار استثمار',
+          'faq.eyebrow': 'هل لديك أسئلة؟',
+          'faq.heading': 'الأسئلة المتداولة',
+          'faq.q1': 'ما هي أنواع الأعمال التي تخدمونها؟',
+          'faq.a1': 'نحن نعمل مع مجموعة واسعة من الأعمال، من الشركات الناشئة والمشاريع الصغيرة إلى الشركات الكبرى القائمة في مختلف الصناعات، بما في ذلك التكنولوجيا، التجزئة، والتصنيع.',
+          'faq.q2': 'كيف أبدأ في استخدام خدماتكم؟',
+          'faq.a2': 'الخطوة الأولى هي استشارة مجانية. يمكنك حجز موعد من خلال صفحة الاتصال على موقعنا، وسنناقش احتياجاتك لإنشاء خطة مصممة خصيصًا لك.',
+          'faq.q3': 'هل بياناتي ومعلوماتي المالية آمنة؟',
+          'faq.a3': 'نحن نستخدم أحدث بروتوكولات الأمان والتشفير لضمان أن جميع معلوماتك المالية الحساسة تظل سرية وآمنة تمامًا.',
+          'caseStudies.eyebrow': 'قصص نجاح',
+          'caseStudies.heading': 'النتائج التي حققناها',
+          'caseStudies.study1.title': 'شركة ناشئة A: من الفكرة إلى الاكتتاب العام',
+          'caseStudies.study1.description': 'ساعدنا شركة تكنولوجيا جديدة على هيكلة أموالها، وإدارة جولة تمويل أولية، والاستعداد للتوسع السريع، مما أدى إلى طرح عام ناجح.',
+          'caseStudies.study1.metric1': 'نمو الإيرادات',
+          'caseStudies.study1.metric2': 'تقييم الامتثال',
+          'caseStudies.study2.title': 'تاجر تجزئة B: عمليات محسنة',
+          'caseStudies.study2.description': 'حللنا البيانات المالية لتحديد أوجه القصور، مما أدى إلى تحسين إدارة المخزون وزيادة كبيرة في هوامش الربح.',
+          'caseStudies.study2.metric1': 'زيادة هامش الربح',
+          'caseStudies.study2.metric2': 'وفورات تشغيلية',
+          'blog.eyebrow': 'رؤى ومعرفة',
+          'blog.heading': 'أحدث الرؤى المالية',
+          'blog.post1.date': '1 ديسمبر 2024',
+          'blog.post1.category': 'الضرائب',
+          'blog.post1.title': '5 استراتيجيات للتخطيط الضريبي للشركات الصغيرة',
+          'blog.post1.excerpt': 'تعرف على كيفية تقليل التزاماتك الضريبية وزيادة مدخراتك باستخدام هذه النصائح المتخصصة.',
+          'blog.post1.button': 'اقرأ المزيد',
+          'blog.post2.date': '22 نوفمبر 2024',
+          'blog.post2.category': 'الاستراتيجية',
+          'blog.post2.title': 'التنبؤ بالمستقبل المالي لعملك',
+          'blog.post2.excerpt': 'دليل خطوة بخطوة لإنشاء تنبؤات مالية دقيقة للتخطيط للنجاح.',
+          'blog.post2.button': 'اقرأ المزيد',
+          'blog.post3.date': '15 نوفمبر 2024',
+          'blog.post3.category': 'الإدارة',
+          'blog.post3.title': 'إدارة الرواتب: الطريق السهل',
+          'blog.post3.excerpt': 'بسيط عملية الرواتب الخاصة بك وابقَ متوافقًا مع نصائح خبرائنا وتوصيات البرامج.',
+          'blog.post3.button': 'اقرأ المزيد',
+          'clients.eyebrow': 'شركاؤنا',
+          'clients.heading': 'موثوق بنا من قبل الشركات الرائدة',
+          'testimonials.eyebrow': 'الشهادات',
+          'testimonials.heading': 'ماذا يقول عملاؤنا',
+          'testimonials.quote1': 'لقد غيرت ستكلي للتمويل عملياتنا المالية. كانت نصائحهم الاستباقية وتخطيطهم الاستراتيجي ذات قيمة لا تقدر بثمن لنمونا.',
+          'testimonials.author1.name': 'جون سميث',
+          'testimonials.author1.company': 'الرئيس التنفيذي، Innovatech Solutions',
+          'testimonials.quote2': 'لقد شهدنا زيادة كبيرة في هوامش ربحنا منذ أن بدأنا العمل مع ستكلي للتمويل. خبرتهم لا مثيل لها.',
+          'testimonials.author2.name': 'جين دو',
+          'testimonials.author2.company': 'مؤسسة، Global Ventures',
+          'testimonials.quote3': 'يقدم فريق ستكلي للتمويل نصائح واضحة وقابلة للتنفيذ ساعدتنا على اتخاذ قرارات مالية أكثر ذكاءً. أوصي بهم بشدة!',
+          'testimonials.author3.name': 'مايكل تشين',
+          'testimonials.author3.company': 'المدير المالي، Apex Logistics',
+          'cta.heading': 'هل أنت مستعد لتنمية عملك؟',
+          'cta.subheading': 'دعنا نناقش كيف يمكننا مساعدتك في تحقيق أهدافك المالية.',
+          'cta.button': 'احجز استشارة مجانية',
+          'footer.aboutText': 'شريكك الموثوق في النمو المالي. نحن نقدم حلول محاسبة واستشارات متخصصة لمساعدة عملك على الازدهار.',
+          'footer.quickLinks': 'روابط سريعة',
+          'footer.services': 'الخدمات',
+          'footer.contactInfo': 'معلومات الاتصال',
+          'footer.address': '456 فاينانشال أفينيو، فيسكال سيتي، ولاية 67890',
+          'footer.phone': '(555) 987-6543',
+          'footer.email': 'info@stacklyfinance.com',
+          'footer.copyright': '© 2025 ستكلي للتمويل والمحاسبة. جميع الحقوق محفوظة.',
+        }
+      };
+
+      const languageSelect = document.getElementById('language-select');
+      const htmlElement = document.documentElement;
+      const currentLang = localStorage.getItem('lang') || 'en';
+
+      function updateContent(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(element => {
+          const key = element.dataset.i18n;
+          if (translations[lang] && translations[lang][key]) {
+            element.textContent = translations[lang][key];
+          }
+        });
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+          const key = element.dataset.i18n-placeholder;
+          if (translations[lang] && translations[lang][key]) {
+            element.placeholder = translations[lang][key];
+          }
+        });
+        htmlElement.setAttribute('lang', lang);
+        if (lang === 'ar' || lang === 'he') {
+          htmlElement.setAttribute('dir', 'rtl');
+        } else {
+          htmlElement.removeAttribute('dir');
+        }
+        localStorage.setItem('lang', lang);
+      }
+
+      if (languageSelect) {
+        for (const [code, name] of Object.entries(languages)) {
+          const option = document.createElement('option');
+          option.value = code;
+          option.textContent = name;
+          languageSelect.appendChild(option);
+        }
+        languageSelect.value = currentLang;
+        languageSelect.addEventListener('change', (event) => {
+          updateContent(event.target.value);
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        updateProfileButton();
+        updateContent(currentLang);
+      });
+    </script>
+</body>
+</html>

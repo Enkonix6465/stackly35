@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stackly Digital Marketing - Contact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* CSS variables for a consistent dark theme */
+        :root {
+          --bg: #0b0d12;
+          --surface: #0f1219;
+          --glass: rgba(255,255,255,0.08);
+          --text: #e9eefc;
+          --muted: #a6b1d0;
+          --brand: #224DB7;
+          --brand-2: #5b8cff;
+          --accent: #00d1ff;
+          --card: #101522;
+          --shadow: 0 10px 30px rgba(0,0,0,.35);
+          --hero-overlay-dark: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
+          --badge-bg: rgba(34,77,183,.15);
+          --badge-border: rgba(34,77,183,.35);
+          --badge-text: #cfe0ff;
+        }
+
+        /* Light theme overrides for a dual-theme design */
+        body.light {
+          --bg: #f0f4f9;
+          --surface: #ffffff;
+          --glass: rgba(0,0,0,0.05);
+          --text: #1d2c41;
+          --muted: #5e6d8a;
+          --brand: #224DB7;
+          --brand-2: #5b8cff;
+          --accent: #008cff;
+          --card: #ffffff;
+          --shadow: 0 10px 30px rgba(0, 0, 0, .1);
+          --hero-overlay-dark: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
+          --badge-bg: rgba(34,77,183,.05);
+          --badge-border: rgba(34,77,183,.2);
+          --badge-text: #224DB7;
+        }
+        
+        body {
+          margin: 0;
+          font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+          background: linear-gradient(180deg, var(--bg) 0%, var(--surface) 100%);
+          color: var(--text);
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100%; display: block; }
+        .container { width: min(1200px, 92%); margin-inline: auto; }
+
+        /* ---------- Header (sticky, glass) ---------- */
+        .header { background-color: var(--surface); padding: 1.25rem 0; position: sticky; top: 0; z-index: 1000; box-shadow: var(--shadow); transition: background-color 0.3s ease; }
+        .logo-img { height: 40px; width: auto; margin-right: 8px; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--brand); display: flex; align-items: center; }
+        .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+        .nav { flex-grow: 1; display: flex; justify-content: flex-end; margin-right: 1rem; }
+        .nav-links { list-style: none; display: flex; gap: 1.5rem; margin: 0; padding: 0; align-items: center; }
+        .nav-links a { color: var(--muted); font-weight: 600; padding: 5px 0; transition: color .3s; position: relative; }
+        .nav-links a:hover, .nav-links a.active { color: var(--text); }
+        .dropdown-menu {
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(10px);
+          transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+          position: absolute;
+          top: 100%;
+          background: var(--card);
+          box-shadow: var(--shadow);
+          border-radius: 8px;
+          padding: 10px 0;
+          min-width: 150px;
+          list-style: none;
+        }
+
+        /* Show with delay */
+        .nav-links li:hover > .dropdown-menu {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+          transition-delay: 0.2s; /* adjust delay */
+        }
+
+        .dropdown-menu a { padding: 10px 15px; color: var(--text); display: block; transition: color 0.3s ease; }
+        .profile { position: relative; }
+        .profile-icon { width: 40px; height: 40px; border-radius: 50%; background-color: #9B59B6; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; cursor: pointer; }
+        .profile-menu { display: none; position: absolute; top: 120%; right: 0; background: var(--card); box-shadow: var(--shadow); border-radius: 8px; overflow: hidden; transition: background-color 0.3s ease; }
+        .profile-menu a { display: block; padding: 10px 15px; color: var(--text); white-space: nowrap; transition: color 0.3s ease; }
+        .profile:hover .profile-menu { display: block; }
+        .mobile-menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; }
+        .theme-toggle { display: block; }
+        
+        /* Language switcher styles */
+        .language-switcher {
+            display: flex;
+            gap: 10px;
+            margin-left: 1rem;
+        }
+        .language-switcher select {
+            background-color: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--glass);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .language-switcher select:focus {
+            outline: none;
+            border-color: var(--brand);
+        }
+
+        @media (max-width: 768px) {
+          .nav { display: none; position: absolute; top: 70px; left: 0; width: 100%; background: var(--surface); box-shadow: var(--shadow); padding: 1rem 0; }
+          .nav.open { display: block; }
+          .nav-links { flex-direction: column; gap: 1rem; }
+          .mobile-menu-toggle { display: block; }
+        }
+
+        /* Global Reset */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .hero-bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4); /* optional dark overlay */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 20px;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: #fff;
+            max-width: 800px;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            opacity: 0;
+        }
+
+        .hero-paragraph {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            opacity: 0;
+        }
+
+        .hero-button {
+            display: inline-block;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            background-color: #224DB7;
+            border: none;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            opacity: 0;
+        }
+
+        .hero-button:hover {
+            background-color: #000;
+            transform: scale(1.05);
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slide-in {
+            animation: slideIn 1s ease-out forwards;
+            animation-delay: 0.5s;
+        }
+
+        .animate-fade-up {
+            animation: fadeUp 1s ease-out forwards;
+            animation-delay: 1s;
+        }
+
+        .animate-fade-up-delayed {
+            animation: fadeUp 1s ease-out forwards;
+            animation-delay: 1.5s;
+        }
+        .animate-slide-in,
+        .animate-fade-up,
+        .animate-fade-up-delayed {
+            animation-fill-mode: both;
+        }
+        
+        /* General Section Styles */
+        .section {
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .section-heading {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .section-subheading {
+            font-size: 1.1rem;
+            color: var(--muted);
+            margin-bottom: 3rem;
+        }
+        
+        /* New Styles for Contact Page Sections */
+        .contact-hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 50vh;
+            padding-top: 5rem;
+            background-color: var(--surface);
+        }
+        
+        .contact-form-section {
+            background-color: var(--bg);
+        }
+        
+        /* New flexbox container for form and image */
+        .form-image-container {
+            display: flex;
+            flex-direction: row;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+            text-align: left;
+        }
+        
+        .contact-form {
+            flex: 1;
+            padding: 2rem;
+            border-radius: 12px;
+            background-color: var(--card);
+            box-shadow: var(--shadow);
+        }
+        
+        .contact-image {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .contact-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            object-fit: cover;
+        }
+
+        /* Make it responsive */
+        @media (max-width: 768px) {
+            .form-image-container {
+                flex-direction: column;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--glass);
+            background-color: var(--surface);
+            color: var(--text);
+            font-family: inherit;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--brand);
+        }
+
+        .form-submit-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--brand);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .form-submit-btn:hover {
+            background-color: var(--brand-2);
+        }
+        
+        .contact-info-section {
+            background-color: var(--surface);
+        }
+        
+        .contact-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .info-card {
+            background-color: var(--card);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            text-align: left;
+        }
+
+        .info-card i {
+            font-size: 2rem;
+            color: var(--brand);
+            margin-bottom: 1rem;
+        }
+        
+        .info-card h4 {
+            font-size: 1.25rem;
+            margin: 0;
+        }
+
+        .info-card p {
+            margin: 0.5rem 0 0;
+            color: var(--muted);
+        }
+
+        .social-media-section {
+            background-color: var(--bg);
+        }
+
+        .social-icons a {
+            font-size: 2rem;
+            color: var(--muted);
+            margin: 0 1rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--brand);
+        }
+        
+        .map-section {
+            background-color: var(--surface);
+        }
+
+        .map-container {
+            width: 100%;
+            height: 400px;
+            background-color: var(--card);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .faq-section {
+            background-color: var(--bg);
+        }
+
+        .faq-item {
+            background-color: var(--card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: left;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .faq-item:hover {
+            background-color: var(--surface);
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out, padding-top 0.3s ease-in-out;
+            color: var(--muted);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px; /* Adjust as needed */
+            padding-top: 1rem;
+        }
+
+        .faq-item.active .faq-question .fas {
+            transform: rotate(180deg);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--surface);
+            border-top: 1px solid rgba(255,255,255,.06);
+            transition: background-color 0.3s ease;
+        }
+        .footer-content {
+            display:grid;
+            grid-template-columns: 2fr 1fr 1fr 1.4fr;
+            gap: 20px;
+            padding: 46px 0;
+        }
+        .footer h3, .footer h4 { margin-top:0; }
+        .footer p, .footer li { color: var(--muted); transition: color 0.3s ease; }
+        .social-links { display:flex; gap:12px; margin-top:10px; }
+        .social-links a { width:38px; height:38px; display:grid; place-items:center; border-radius:10px; background: var(--glass); border:1px solid var(--glass); transition: background-color 0.3s ease; }
+        .footer ul { list-style:none; padding:0; margin:0; display:grid; gap:8px; }
+        .footer-bottom { border-top:1px solid rgba(255,255,255,.06); text-align:center; padding: 16px 0 22px; color: var(--muted); font-size:.95rem; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .footer-content { grid-template-columns: 1.4fr 1fr 1fr; }
+            .nav-container { grid-template-columns: auto 1fr auto; }
+            .theme-toggle { display:block; }
+        }
+        @media (max-width: 780px) {
+            .mobile-menu-toggle { display:block; }
+            .nav { display:none; position:absolute; left:0; right:0; top:100%; background:var(--surface); box-shadow:var(--shadow); padding:1rem 0; }
+            .nav.open { display:block; }
+            .nav-links { flex-direction:column; align-items:flex-start; padding: 10px 12px 16px; }
+            .dropdown:hover .dropdown-menu { display:none; }
+            .dropdown .dropdown-toggle::after{ content: ""; }
+            .dropdown-menu { position:relative; border:none; background:transparent; padding:6px 0 10px; display:block; }
+            .footer-content { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 780px) {
+  .dropdown-menu {
+    position: static;
+    background: var(--card);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    padding: 8px 0;
+    margin-left: 16px;
+    min-width: 140px;
+    display: none; /* Hidden by default, shown by JS */
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  .dropdown-menu li a {
+    color: var(--text);
+    padding: 10px 18px;
+    display: block;
+    font-weight: 500;
+  }
+  .dropdown-menu li a:hover {
+    background: var(--surface);
+    color: var(--brand);
+  }
+} 
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container nav-container">
+            <a href="home1.html" class="logo">
+                <img class="logo-img" src="img/cropped-image-removebg-preview-2.png" alt="Stackly Logo">
+            </a>
+            <div class="nav-right">
+                <nav class="nav" id="site-nav">
+                    <ul class="nav-links">
+                        <li class="dropdown">
+                            <a href="home1.html" id="home_link">Home <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="home1.html">Home 1</a></li>
+                                <li><a href="home3.html">Home 2</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="About us.html" id="about_us_link">About Us</a></li>
+                        <li class="dropdown">
+                            <a href="Services.html" id="services_link">Services <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="Services.html" id="all_services_link">All Services</a></li>
+                                <li><a href="Corporate.html">Corporate Law</a></li>
+                <li><a href="estate Law.html">Real Estate Law</a></li>
+                <li><a href="intellectual.html">Intellectual Property</a></li>
+                <li><a href="Criminal.html">Criminal Defense</a></li>
+                <li><a href="Family.html">Family Law</a></li>
+                <li><a href="injury.html">Personal Injury</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="blog.html" id="blog_link">Blog</a></li>
+                        <li><a href="contact.html" id="contact_us_link">Contact Us</a></li>
+                        <li class="dropdown">
+                            <a href="index.html" id="login_link">Login <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="index.html" id="sign_up_login_link">Sign Up/Login</a></li>
+                                <li><a href="sign admin.html" id="admin_login_link">Admin Login</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="language-switcher">
+                    <select id="language-select">
+                        <option value="en">English</option>
+                        <option value="ar">Arabic</option>
+                        <option value="he">Hebrew</option>
+                    </select>
+                </div>
+                <div class="profile-container" style="position: relative;">
+                    <div class="profile-icon" id="profile-btn"><span id="initials-display"></span></div>
+                    <div class="dropdown-menu" id="profile-dropdown" style="position: absolute; top: 100%; right: 0; background-color: var(--card); box-shadow: var(--shadow); border-radius: 8px; padding: 10px 0; min-width: 120px; margin-top: 10px; display: none;">
+                      <a href="index.html" onclick="logout()" style="padding: 10px 15px; color: var(--text); display: block;">Logout</a>
+                    </div>
+                </div>
+                <div class="theme-toggle">
+                    <button id="theme-toggle" class="btn btn-secondary">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+                <div class="mobile-menu-toggle" id="mobile-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <video autoplay muted loop playsinline class="hero-bg-video">
+                <source src="videos/7535113-hd_1280_720_25fps.mp4">
+                Your browser does not support the video tag.
+            </video>
+        
+            <div class="hero-overlay">
+                <div class="hero-content">
+                    <h1 class="hero-title animate-slide-in" id="contact_us_hero_title">Contact Us</h1>
+                    <p class="hero-paragraph animate-fade-up" id="contact_us_hero_paragraph">
+                        We're here to answer your questions and help you with your digital marketing needs.
+                    </p>
+                    <a href="#contact-form" class="hero-button animate-fade-up-delayed" id="get_started_button">Get Started</a>
+                </div>
+            </div>
+        </section>
+<section class="section contact-form-section">
+    <div class="container form-image-container">
+        <div class="contact-image">
+            <img src="https://i.pinimg.com/736x/4a/f8/6e/4af86ece6a708b06d50ef42b102967ab.jpg" alt="Image of a professional team" onerror="this.src='https://placehold.co/600x600/101522/e9eefc?text=Our+Team'">
+        </div>
+        <div class="contact-form">
+            <h2 class="section-heading" style="text-align: left; margin-bottom: 2rem;" id="send_us_a_message">Send Us a Message</h2>
+            <form id="contact-form" action="#" method="post">
+                <div class="form-group">
+                    <label for="name" id="full_name_label">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email" id="email_address_label">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject" id="subject_label">Subject</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+                <div class="form-group">
+                    <label for="message" id="your_message_label">Your Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="form-submit-btn" id="send_message_button">Send Message</button>
+            </form>
+        </div>
+    </div>
+</section>
+        <section class="section contact-info-section">
+            <div class="container">
+                <h2 class="section-heading" id="our_contact_information">Our Contact Information</h2>
+                <div class="contact-info-grid">
+                    <div class="info-card">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h4 id="our_office">Our Office</h4>
+                        <p id="office_address">123 Marketing Lane, Suite 456<br>City, State, 12345</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-phone"></i>
+                        <h4 id="call_us">Call Us</h4>
+                        <p id="phone_number">+1 (555) 123-4567</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-envelope"></i>
+                        <h4 id="email_us">Email Us</h4>
+                        <p id="email_address_info">info@stackly.com</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section social-media-section">
+            <div class="container">
+                <h2 class="section-heading" id="follow_us_online">Follow Us Online</h2>
+                <p class="section-subheading" id="follow_us_paragraph">Connect with us on our social media platforms to stay updated.</p>
+                <div class="social-icons">
+                    <a href="https://x.com/"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.linkedin.com/"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section map-section">
+            <div class="container">
+                <h2 class="section-heading" id="find_us_on_the_map">Find Us on the Map</h2>
+                <p class="section-subheading" id="find_us_paragraph">Our physical location for in-person meetings and consultations.</p>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509748!2d144.9537353153163!3d-37.81720974201884!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0x5045675218d2d93e!2sFederation%20Square!5e0!3m2!1sen!2sau!4v1614275037086!5m2!1sen!2sau" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+
+       
+    </main>
+    
+    <footer class="footer">
+        <div class="container footer-content">
+            <div>
+                <img class="logo-img" src="img/cropped-image-removebg-preview-2.png" alt="Stackly Logo">
+                <p id="footer_description">Your trusted partner in digital growth. We provide innovative marketing solutions and expertise to help your business thrive online.</p>
+                
+            </div>
+            <div>
+                <h4 id="quick_links">Quick Links</h4>
+                <ul>
+                     <li><a href="index.html" id="footer_home">Home</a></li>
+            <li><a href="About us.html" id="footer_about_us">About Us</a></li>
+            <li><a href="Services.html" id="footer_services_link">Services</a></li>
+                            <li><a href="blog.html" id="footer_blog">Blog</a></li>
+
+            <li><a href="contact.html" id="footer_contact">Contact</a></li>
+          
+            </div>
+            <div>
+                <h4 id="footer_services">Services</h4>
+                <ul>
+                   <li><a href="Corporate.html">Corporate Law</a></li>
+                <li><a href="estate Law.html">Real Estate Law</a></li>
+                <li><a href="intellectual.html">Intellectual Property</a></li>
+                <li><a href="Criminal.html">Criminal Defense</a></li>
+                <li><a href="Family.html">Family Law</a></li>
+                <li><a href="injury.html">Personal Injury</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 id="contact_info">Contact Info</h4>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> <span id="footer_address">123 Digital Marketing Blvd, City, State 12345</span></li>
+                    <li><i class="fas fa-phone"></i> <span id="footer_phone">(555) 123-4567</span></li>
+                    <li><i class="fas fa-envelope"></i> <span id="footer_email">info@stacklydigital.com</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom" id="all_rights_reserved">© 2025 Stackly law Firm. All rights reserved.</div>
+    </footer>
+
+    <script>
+        const translations = {
+            "en": {
+                "title": "Stackly Digital Marketing - Contact",
+                "home": "Home",
+                "about_us": "About Us",
+                "services": "Services",
+                "blog": "Blog",
+                "contact_us": "Contact Us",
+                "login": "Login",
+                "sign_up_login": "Sign Up/Login",
+                "admin_login": "Admin Login",
+                "contact_us_hero_title": "Contact Us",
+                "contact_us_hero_paragraph": "We're here to answer your questions and help you with your digital marketing needs.",
+                "get_started_button": "Get Started",
+                "send_us_a_message": "Send Us a Message",
+                "full_name": "Full Name",
+                "email_address": "Email Address",
+                "subject": "Subject",
+                "your_message": "Your Message",
+                "send_message_button": "Send Message",
+                "our_contact_information": "Our Contact Information",
+                "our_office": "Our Office",
+                "office_address": "123 Marketing Lane, Suite 456\nCity, State, 12345",
+                "call_us": "Call Us",
+                "phone_number": "+1 (555) 123-4567",
+                "email_us": "Email Us",
+                "email_address_info": "info@stackly.com",
+                "follow_us_online": "Follow Us Online",
+                "follow_us_paragraph": "Connect with us on our social media platforms to stay updated.",
+                "find_us_on_the_map": "Find Us on the Map",
+                "find_us_paragraph": "Our physical location for in-person meetings and consultations.",
+                "faq_title": "Frequently Asked Questions",
+                "faq_q1": "What services do you offer?",
+                "faq_a1": "We offer a comprehensive suite of digital marketing services, including SEO, PPC advertising, social media management, content marketing, email marketing, and web development.",
+                "faq_q2": "How do you measure success?",
+                "faq_a2": "We believe in data-driven results. We measure success through key performance indicators (KPIs) such as website traffic, lead generation, conversion rates, and return on investment (ROI), providing you with detailed monthly reports.",
+                "faq_q3": "What makes your agency different?",
+                "faq_a3": "Our personalized approach and commitment to transparency set us apart. We work as an extension of your team to craft a strategy that aligns perfectly with your business goals, ensuring every dollar spent contributes to your growth.",
+                "footer_description": "Your trusted partner in digital growth. We provide innovative marketing solutions and expertise to help your business thrive online.",
+                "quick_links": "Quick Links",
+                "footer_services": "Services",
+                "contact_info": "Contact Info",
+                "footer_address": "123 Digital Marketing Blvd, City, State 12345",
+                "footer_phone": "(555) 123-4567",
+                "footer_email": "info@stacklydigital.com",
+                "all_rights_reserved": "© 2025 Stackly Digital Marketing. All rights reserved."
+            },
+            "ar": {
+                "title": "Stackly للتسويق الرقمي - اتصل بنا",
+                "home": "الرئيسية",
+                "about_us": "من نحن",
+                "services": "خدماتنا",
+                "blog": "مدونة",
+                "contact_us": "اتصل بنا",
+                "login": "تسجيل الدخول",
+                "sign_up_login": "تسجيل/تسجيل الدخول",
+                "admin_login": "تسجيل دخول المسؤول",
+                "contact_us_hero_title": "اتصل بنا",
+                "contact_us_hero_paragraph": "نحن هنا للإجابة على أسئلتك ومساعدتك في احتياجاتك للتسويق الرقمي.",
+                "get_started_button": "ابدأ الآن",
+                "send_us_a_message": "أرسل لنا رسالة",
+                "full_name": "الاسم الكامل",
+                "email_address": "عنوان البريد الإلكتروني",
+                "subject": "الموضوع",
+                "your_message": "رسالتك",
+                "send_message_button": "أرسل الرسالة",
+                "our_contact_information": "معلومات الاتصال الخاصة بنا",
+                "our_office": "مكتبنا",
+                "office_address": "123 شارع التسويق، جناح 456\nالمدينة، الولاية، 12345",
+                "call_us": "اتصل بنا",
+                "phone_number": "+1 (555) 123-4567",
+                "email_us": "أرسل لنا بريدًا إلكترونيًا",
+                "email_address_info": "info@stackly.com",
+                "follow_us_online": "تابعنا عبر الإنترنت",
+                "follow_us_paragraph": "تواصل معنا على منصات التواصل الاجتماعي الخاصة بنا لتبقى على اطلاع.",
+                "find_us_on_the_map": "تجدنا على الخريطة",
+                "find_us_paragraph": "موقعنا الفعلي للاجتماعات والاستشارات الشخصية.",
+                "faq_title": "الأسئلة المتداولة",
+                "faq_q1": "ما هي الخدمات التي تقدمونها؟",
+                "faq_a1": "نقدم مجموعة شاملة من خدمات التسويق الرقمي، بما في ذلك تحسين محركات البحث، إعلانات الدفع بالنقرة، إدارة وسائل التواصل الاجتماعي، تسويق المحتوى، التسويق عبر البريد الإلكتروني، وتطوير الويب.",
+                "faq_q2": "كيف تقيسون النجاح؟",
+                "faq_a2": "نؤمن بالنتائج القائمة على البيانات. نقيس النجاح من خلال مؤشرات الأداء الرئيسية (KPIs) مثل زيارات الموقع، توليد العملاء المحتملين، معدلات التحويل، والعائد على الاستثمار (ROI)، ونقدم لك تقارير شهرية مفصلة.",
+                "faq_q3": "ما الذي يميز وكالتكم؟",
+                "faq_a3": "نهجنا الشخصي والتزامنا بالشفافية يميزنا. نعمل كامتداد لفريقك لوضع استراتيجية تتوافق تمامًا مع أهداف عملك، مما يضمن أن كل دولار يتم إنفاقه يساهم في نموك.",
+                "footer_description": "شريكك الموثوق في النمو الرقمي. نحن نقدم حلول تسويق مبتكرة وخبرة لمساعدة عملك على الازدهار عبر الإنترنت.",
+                "quick_links": "روابط سريعة",
+                "footer_services": "خدمات",
+                "contact_info": "معلومات الاتصال",
+                "footer_address": "123 جادة التسويق الرقمي، المدينة، الولاية 12345",
+                "footer_phone": "(555) 123-4567",
+                "footer_email": "info@stacklydigital.com",
+                "all_rights_reserved": "© 2025 Stackly للتسويق الرقمي. جميع الحقوق محفوظة."
+            },
+            "he": {
+                "title": "Stackly שיווק דיגיטלי - צור קשר",
+                "home": "בית",
+                "about_us": "אודותינו",
+                "services": "שירותים",
+                "blog": "בלוג",
+                "contact_us": "צור קשר",
+                "login": "התחבר",
+                "sign_up_login": "הירשם/התחבר",
+                "admin_login": "כניסת מנהל",
+                "contact_us_hero_title": "צור קשר",
+                "contact_us_hero_paragraph": "אנחנו כאן כדי לענות על שאלותיך ולסייע לך עם צרכי השיווק הדיגיטלי שלך.",
+                "get_started_button": "התחל עכשיו",
+                "send_us_a_message": "שלח לנו הודעה",
+                "full_name": "שם מלא",
+                "email_address": "כתובת דוא\"ל",
+                "subject": "נושא",
+                "your_message": "ההודעה שלך",
+                "send_message_button": "שלח הודעה",
+                "our_contact_information": "פרטי ההתקשרות שלנו",
+                "our_office": "המשרד שלנו",
+                "office_address": "123 Marketing Lane, Suite 456\nעיר, מדינה, 12345",
+                "call_us": "התקשר אלינו",
+                "phone_number": "+1 (555) 123-4567",
+                "email_us": "שלח לנו דוא\"ל",
+                "email_address_info": "info@stackly.com",
+                "follow_us_online": "עקוב אחרינו באינטרנט",
+                "follow_us_paragraph": "התחבר אלינו בפלטפורמות המדיה החברתית שלנו כדי להישאר מעודכן.",
+                "find_us_on_the_map": "מצא אותנו על המפה",
+                "find_us_paragraph": "המיקום הפיזי שלנו לפגישות וייעוצים אישיים.",
+                "faq_title": "שאלות נפוצות",
+                "faq_q1": "אילו שירותים אתם מציעים?",
+                "faq_a1": "אנו מציעים חבילה מקיפה של שירותי שיווק דיגיטלי, כולל קידום אתרים, פרסום PPC, ניהול מדיה חברתית, שיווק תוכן, שיווק בדוא\"ל ופיתוח אתרים.",
+                "faq_q2": "איך אתם מודדים הצלחה?",
+                "faq_a2": "אנו מאמינים בתוצאות מבוססות נתונים. אנו מודדים הצלחה באמצעות מדדי ביצועים מרכזיים (KPIs) כגון תנועת גולשים לאתר, יצירת לידים, שיעורי המרה והחזר על השקעה (ROI), ומספקים לך דוחות חודשיים מפורטים.",
+                "faq_q3": "מה מייחד את הסוכנות שלכם?",
+                "faq_a3": "הגישה האישית והמחויבות שלנו לשקיפות מייחדות אותנו. אנו עובדים כהרחבה של הצוות שלך כדי ליצור אסטרטגיה המותאמת באופן מושלם ליעדים העסקיים שלך، מה שמבטיח שכל דולר שהוצא תורם לצמיחה שלך.",
+                "footer_description": "השותף המהימן שלך לצמיחה דיגיטלית. אנו מספקים פתרונות שיווק חדשניים ומומחיות כדי לעזור לעסק שלך לשגשג באינטרנט.",
+                "quick_links": "קישורים מהירים",
+                "footer_services": "שירותים",
+                "contact_info": "פרטי התקשרות",
+                "footer_address": "123 Digital Marketing Blvd, City, State 12345",
+                "footer_phone": "(555) 123-4567",
+                "footer_email": "info@stacklydigital.com",
+                "all_rights_reserved": "© 2025 Stackly שיווק דיגיטלי. כל הזכויות שמורות."
+            }
+        };
+
+        const elementsToTranslate = {
+            'title': (el, key) => el.textContent = translations[key].title,
+            'home_link': (el, key) => el.textContent = translations[key].home,
+            'about_us_link': (el, key) => el.textContent = translations[key].about_us,
+            'services_link': (el, key) => el.textContent = translations[key].services,
+            'all_services_link': (el, key) => el.textContent = translations[key].services,
+            'blog_link': (el, key) => el.textContent = translations[key].blog,
+            'contact_us_link': (el, key) => el.textContent = translations[key].contact_us,
+            'login_link': (el, key) => el.textContent = translations[key].login,
+            'sign_up_login_link': (el, key) => el.textContent = translations[key].sign_up_login,
+            'admin_login_link': (el, key) => el.textContent = translations[key].admin_login,
+            'contact_us_hero_title': (el, key) => el.textContent = translations[key].contact_us_hero_title,
+            'contact_us_hero_paragraph': (el, key) => el.textContent = translations[key].contact_us_hero_paragraph,
+            'get_started_button': (el, key) => el.textContent = translations[key].get_started_button,
+            'send_us_a_message': (el, key) => el.textContent = translations[key].send_us_a_message,
+            'full_name_label': (el, key) => el.textContent = translations[key].full_name,
+            'email_address_label': (el, key) => el.textContent = translations[key].email_address,
+            'subject_label': (el, key) => el.textContent = translations[key].subject,
+            'your_message_label': (el, key) => el.textContent = translations[key].your_message,
+            'send_message_button': (el, key) => el.textContent = translations[key].send_message_button,
+            'our_contact_information': (el, key) => el.textContent = translations[key].our_contact_information,
+            'our_office': (el, key) => el.textContent = translations[key].our_office,
+            'office_address': (el, key) => el.textContent = translations[key].office_address,
+            'call_us': (el, key) => el.textContent = translations[key].call_us,
+            'phone_number': (el, key) => el.textContent = translations[key].phone_number,
+            'email_us': (el, key) => el.textContent = translations[key].email_us,
+            'email_address_info': (el, key) => el.textContent = translations[key].email_address_info,
+            'follow_us_online': (el, key) => el.textContent = translations[key].follow_us_online,
+            'follow_us_paragraph': (el, key) => el.textContent = translations[key].follow_us_paragraph,
+            'find_us_on_the_map': (el, key) => el.textContent = translations[key].find_us_on_the_map,
+            'find_us_paragraph': (el, key) => el.textContent = translations[key].find_us_paragraph,
+            'faq_title': (el, key) => el.textContent = translations[key].faq_title,
+            'faq_q1': (el, key) => el.textContent = translations[key].faq_q1,
+            'faq_a1': (el, key) => el.textContent = translations[key].faq_a1,
+            'faq_q2': (el, key) => el.textContent = translations[key].faq_q2,
+            'faq_a2': (el, key) => el.textContent = translations[key].faq_a2,
+            'faq_q3': (el, key) => el.textContent = translations[key].faq_q3,
+            'faq_a3': (el, key) => el.textContent = translations[key].faq_a3,
+            'footer_description': (el, key) => el.textContent = translations[key].footer_description,
+            'quick_links': (el, key) => el.textContent = translations[key].quick_links,
+            'footer_services': (el, key) => el.textContent = translations[key].footer_services,
+            'contact_info': (el, key) => el.textContent = translations[key].contact_info,
+            'footer_address': (el, key) => el.textContent = translations[key].footer_address,
+            'footer_phone': (el, key) => el.textContent = translations[key].footer_phone,
+            'footer_email': (el, key) => el.textContent = translations[key].footer_email,
+            'all_rights_reserved': (el, key) => el.textContent = translations[key].all_rights_reserved
+        };
+
+        function setLanguage(lang) {
+            const isRTL = lang === 'ar' || lang === 'he';
+            document.documentElement.setAttribute('lang', lang);
+            document.body.style.direction = isRTL ? 'rtl' : 'ltr';
+            document.body.style.textAlign = isRTL ? 'right' : 'left';
+
+            document.getElementById('language-select').value = lang;
+
+            for (const id in elementsToTranslate) {
+                const element = document.getElementById(id);
+                if (element) {
+                    elementsToTranslate[id](element, lang);
+                }
+            }
+
+            document.title = translations[lang].title;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setLanguage('en');
+
+            const languageSelect = document.getElementById('language-select');
+            languageSelect.addEventListener('change', (event) => {
+                setLanguage(event.target.value);
+            });
+        });
+
+        // Mobile nav toggle
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const nav = document.getElementById('site-nav');
+        mobileToggle?.addEventListener('click', () => nav.classList.toggle('open'));
+
+        // Theme toggle (simple demo toggling body class)
+        document.getElementById('theme-toggle')?.addEventListener('click', () => {
+            document.body.classList.toggle('light');
+        });
+
+        // Profile dropdown functionality
+        const profileBtn = document.getElementById('profile-btn');
+        const profileDropdown = document.getElementById('profile-dropdown');
+        
+        profileBtn?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+          if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+            profileDropdown.style.display = 'none';
+          }
+        });
+
+        // Logout function
+        function logout() {
+          // Add your logout logic here
+          alert('Logged out successfully!');
+          window.location.href = 'login.html';
+        }
+    
+// Profile dropdown + initials + full name (from localStorage.userData)
+function getUserInitials(name) {
+  if (!name) return "U";
+  const parts = name.trim().split(/\s+/);
+  const first = parts[0][0];
+  const last = parts.length > 1 ? parts[parts.length - 1][0] : "";
+  return (first + last).toUpperCase();
+}
+document.addEventListener("DOMContentLoaded", () => {
+  const profileBtn = document.getElementById("profile-btn");
+  const profileDropdown = document.getElementById("profile-dropdown");
+  const initialsDisplay = document.getElementById("initials-display");
+  const fullNameDisplay = document.getElementById("full-name-display");
+
+  // Read userData from localStorage
+  let userData = JSON.parse(localStorage.getItem("userData") || "{}");
+  let storedName = "Guest User";
+  if (userData.firstName && userData.lastName) {
+    storedName = userData.firstName + " " + userData.lastName;
+  }
+
+  if (initialsDisplay) initialsDisplay.textContent = getUserInitials(storedName);
+  if (fullNameDisplay) fullNameDisplay.textContent = storedName;
+
+  if (profileBtn && profileDropdown) {
+    profileBtn.addEventListener("click", () => {
+      profileDropdown.classList.toggle("active");
+    });
+    document.addEventListener("click", (e) => {
+      if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+        profileDropdown.classList.remove("active");
+      }
+    });
+  }
+});
+// Mobile dropdown toggle for navigation
+document.querySelectorAll('.nav-links .dropdown > a').forEach(function(dropdownToggle) {
+  dropdownToggle.addEventListener('click', function(e) {
+    // Only run on mobile
+    if (window.innerWidth <= 780) {
+      e.preventDefault();
+      const dropdownMenu = this.nextElementSibling;
+      if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
+        dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+      }
+    }
+  });
+});
+
+// Hide dropdowns when resizing to desktop
+window.addEventListener('resize', function() {
+  if (window.innerWidth > 780) {
+    document.querySelectorAll('.dropdown-menu').forEach(function(menu) {
+      menu.style.display = '';
+    });
+  }
+});
+ document.addEventListener('DOMContentLoaded', function() {
+        const contactForm = document.getElementById('contact-form');
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // This is the key line to prevent the 405 error
+
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const subject = document.getElementById('subject').value;
+                const message = document.getElementById('message').value;
+
+                const newQuery = {
+                    name: name,
+                    email: email,
+                    subject: subject,
+                    message: message,
+                    timestamp: new Date().toISOString()
+                };
+
+                let queries = JSON.parse(localStorage.getItem('contactForm')) || [];
+                queries.push(newQuery);
+                localStorage.setItem('contactForm', JSON.stringify(queries));
+
+                alert('Your message has been sent!');
+                contactForm.reset();
+            });
+        }
+    });
+
+</script>
+</body>
+</html>
