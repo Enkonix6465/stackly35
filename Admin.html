@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root {
@@ -81,6 +82,7 @@
     .btn { border: 1px solid var(--border); background: var(--card); color: var(--text);
            padding: 9px 12px; border-radius: 10px; font-weight: 700; cursor: pointer; }
     .btn.primary { background: linear-gradient(90deg, var(--brand), var(--brand-2)); border-color: transparent; }
+    .menu-toggle { display: none; }
 
     /* Language selector */
     .language-selector {
@@ -119,6 +121,7 @@
     /* Content */
     .content { padding: 22px; }
     .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
     .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; box-shadow: var(--shadow); }
     .card h3 { margin: 0 0 6px; font-size: .95rem; color: var(--muted); font-weight: 700; }
     .card .big { font-size: 2rem; font-weight: 800; }
@@ -127,7 +130,8 @@
     .section.active { display: block; }
 
     /* Tables */
-    table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; min-width: 600px; }
     th, td { padding: 12px 14px; border-bottom: 1px solid var(--border); text-align: left; }
     th { background: var(--panel); color: var(--text); position: sticky; top: 0; }
     tr:nth-child(even) td { background: var(--table-stripe); }
@@ -144,8 +148,68 @@
     .chart-box { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; box-shadow: var(--shadow); }
 
     /* Responsive */
-    @media (max-width: 1100px){ .cards{grid-template-columns: repeat(2,1fr);} }
-    @media (max-width: 720px){ .wrap{grid-template-columns: 1fr;} .sidebar{position: static; height: auto;} .cards{grid-template-columns: 1fr;} }
+    @media (max-width: 1100px){
+      .cards { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px){
+      .wrap { grid-template-columns: 1fr; }
+      .sidebar {
+        position: fixed;
+        left: -260px;
+        top: 0;
+        bottom: 0;
+        width: 260px;
+        z-index: 1000;
+        transition: left 0.3s ease-in-out;
+      }
+      .sidebar.active {
+        left: 0;
+      }
+      .menu-toggle {
+        display: block;
+        background: none;
+        border: none;
+        color: var(--text);
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0;
+      }
+      .topbar {
+        padding: 12px 20px;
+      }
+      .top-actions {
+        gap: 5px;
+      }
+      .content {
+        padding: 16px;
+      }
+      .cards {
+        grid-template-columns: 1fr;
+      }
+      .chart-grid {
+        grid-template-columns: 1fr;
+      }
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .grid-1 {
+        grid-template-columns: 1fr;
+      }
+      .chart-box {
+        margin-top: 10px !important;
+        height: 300px;
+      }
+      .chart-box + .chart-box {
+        margin-top: 10px;
+      }
+      .topbar .title {
+        font-size: 1.2rem;
+      }
+      .chart-box canvas {
+        width: 100% !important;
+        height: 100% !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -166,6 +230,7 @@
 
     <main>
       <div class="topbar">
+        <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
         <div class="title" id="sectionTitle" data-key="dashboard_title">Dashboard</div>
         <div class="top-actions">
           <div class="language-selector">
@@ -190,7 +255,7 @@
             <div class="card"><h3 data-key="queries">Queries</h3><div class="big" id="statQueries">0</div></div>
             <div class="card"><h3 data-key="total_logs">Total Logs</h3><div class="big" id="statLogs">0</div></div>
           </div>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-top:16px;">
+          <div class="chart-grid">
             <div class="chart-box">
               <h3 data-key="logins_vs_logouts">Logins vs Logouts</h3>
               <canvas id="chartLogPie"></canvas>
@@ -244,15 +309,17 @@
 
           <div class="card" style="margin-top:16px;">
             <strong data-key="system_logs">System Logs</strong>
-            <table id="logsTable" style="margin-top:10px;">
-              <thead>
-                <tr>
-                  <th data-key="hash_symbol">#</th>
-                  <th data-key="event">Event</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
+            <div class="table-wrap">
+                <table id="logsTable" style="margin-top:10px;">
+                    <thead>
+                        <tr>
+                            <th data-key="hash_symbol">#</th>
+                            <th data-key="event">Event</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
           </div>
         </section>
 
@@ -263,13 +330,15 @@
             <div class="card"><h3 data-key="visits">Visits</h3><div class="big" id="statVisits">0</div></div>
             <div class="card"><h3 data-key="clients">Clients</h3><div class="big" id="statClients">0</div></div>
           </div>
-          <div class="chart-box" style="margin-bottom:16px;">
-            <h3 data-key="clients_by_service_type">Clients by Service Type</h3>
-            <canvas id="chartCases"></canvas>
-          </div>
-          <div class="chart-box">
-            <h3 data-key="top_query_subjects">Top Query Subjects</h3>
-            <canvas id="chartSubjects"></canvas>
+          <div class="chart-grid">
+            <div class="chart-box">
+              <h3 data-key="clients_by_service_type">Clients by Service Type</h3>
+              <canvas id="chartCases"></canvas>
+            </div>
+            <div class="chart-box">
+              <h3 data-key="top_query_subjects">Top Query Subjects</h3>
+              <canvas id="chartSubjects"></canvas>
+            </div>
           </div>
         </section>
 
@@ -445,12 +514,10 @@
         elements.forEach(el => {
             const key = el.getAttribute('data-key');
             if (translations[key] && translations[key][lang]) {
-                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') {
                     if (el.placeholder) {
                         el.placeholder = translations[key][lang];
                     }
-                } else if (el.tagName === 'BUTTON' || el.tagName === 'H3' || el.tagName === 'STRONG' || el.tagName === 'LABEL' || el.tagName === 'SPAN' || el.tagName === 'DIV' || el.tagName === 'TH' || el.tagName === 'P') {
-                    el.textContent = translations[key][lang];
                 } else {
                     el.textContent = translations[key][lang];
                 }
@@ -506,7 +573,26 @@
         const key = btn.dataset.key;
         const currentLang = document.getElementById('current-lang').textContent.toLowerCase();
         $('#sectionTitle').textContent = translations[key][currentLang];
+
+        // Close sidebar on mobile after clicking a link
+        if (window.innerWidth <= 768) {
+          $('.sidebar').classList.remove('active');
+        }
       });
+    });
+
+    // Mobile menu toggle
+    $('#menuToggle').addEventListener('click', () => {
+      $('.sidebar').classList.toggle('active');
+    });
+    
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', (e) => {
+        const sidebar = $('.sidebar');
+        const menuToggle = $('#menuToggle');
+        if (window.innerWidth <= 768 && sidebar.classList.contains('active') && !sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+            sidebar.classList.remove('active');
+        }
     });
 
     // ======= Logout =======
@@ -552,13 +638,13 @@
       if(chartOverview) chartOverview.destroy();
       chartLogPie = new Chart(ctxPie, {
         type: 'pie',
-        data: { labels:['Logins','Logouts'], datasets:[{ data:[loginCount, logoutCount] }] },
-        options: { plugins:{ legend:{ position:'bottom' } } }
+        data: { labels:['Logins','Logouts'], datasets:[{ data:[loginCount, logoutCount], backgroundColor:['#224DB7', '#5e6d8a'] }] },
+        options: { plugins:{ legend:{ position:'bottom', labels: { color: 'var(--text)' } } } }
       });
       chartOverview = new Chart(ctxOverview, {
         type: 'doughnut',
-        data: { labels:['Users','Queries','Clients','Logs'], datasets:[{ data:[users.length, queries.length, clients.length, logs.length] }] },
-        options: { plugins:{ legend:{ position:'bottom' } } }
+        data: { labels:['Users','Queries','Clients','Logs'], datasets:[{ data:[users.length, queries.length, clients.length, logs.length], backgroundColor:['#224DB7', '#00d1ff', '#5b8cff', '#9fb0d0'] }] },
+        options: { plugins:{ legend:{ position:'bottom', labels: { color: 'var(--text)' } } } }
       });
     }
 
@@ -637,8 +723,8 @@
       if(chartCases) chartCases.destroy();
       chartCases = new Chart(ctxCases, {
         type: 'bar',
-        data: { labels: caseLabels, datasets: [{ label: 'Clients', data: caseValues }] },
-        options: { plugins:{ legend:{ display:false } }, scales:{ y:{ beginAtZero:true, precision:0 } } }
+        data: { labels: caseLabels, datasets: [{ label: 'Clients', data: caseValues, backgroundColor: '#224DB7' }] },
+        options: { plugins:{ legend:{ display:false } }, scales:{ y:{ beginAtZero:true, precision:0, grid: { color: 'var(--border)' }, ticks: { color: 'var(--text)' } }, x: { grid: { color: 'var(--border)' }, ticks: { color: 'var(--text)' } } } }
       });
 
       // Top subjects from queries
@@ -652,8 +738,8 @@
       if(chartSubjects) chartSubjects.destroy();
       chartSubjects = new Chart(ctxSubjects, {
         type: 'bar',
-        data: { labels: subjLabels, datasets: [{ label: 'Queries', data: subjValues }] },
-        options: { plugins:{ legend:{ display:false } }, scales:{ y:{ beginAtZero:true, precision:0 } } }
+        data: { labels: subjLabels, datasets: [{ label: 'Queries', data: subjValues, backgroundColor: '#00d1ff' }] },
+        options: { plugins:{ legend:{ display:false } }, scales:{ y:{ beginAtZero:true, precision:0, grid: { color: 'var(--border)' }, ticks: { color: 'var(--text)' } }, x: { grid: { color: 'var(--border)' }, ticks: { color: 'var(--text)' } } } }
       });
     }
 
@@ -703,8 +789,6 @@
 
     // ======= Init =======
     renderEverything();
-
   </script>
-
 </body>
 </html>
