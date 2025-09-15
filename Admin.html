@@ -10,20 +10,20 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    :root {
-      --bg: #0b0d12;
-      --surface: #101522;
-      --panel: #0f1219;
-      --text: #e9eefc;
-      --muted: #9fb0d0;
-      --brand: #224DB7;
-      --brand-2: #5b8cff;
-      --accent: #00d1ff;
-      --card: #111726;
-      --border: rgba(255,255,255,0.08);
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --table-stripe: rgba(255,255,255,.03);
-    }
+   :root {
+  --bg: #0b0d12;
+  --surface: #101522;
+  --panel: #0f1219;
+  --text: #e9eefc;
+  --muted: #c4d2e8; /* Changed for better visibility in dark mode */
+  --brand: #224DB7;
+  --brand-2: #5b8cff;
+  --accent: #00d1ff;
+  --card: #111726;
+  --border: rgba(255,255,255,0.08);
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+  --table-stripe: rgba(255,255,255,.03);
+}
     body.light {
       --bg: #f4f6fa;
       --surface: #ffffff;
@@ -52,21 +52,79 @@
 
     /* Sidebar */
     .sidebar {
-      background: var(--panel); border-right: 1px solid var(--border);
-      padding: 22px 16px; position: sticky; top: 0; height: 100vh; overflow-y: auto;
+      background: var(--panel);
+      border-right: 1px solid var(--border);
+      padding: 22px 16px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
     }
-    .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; }
-    .brand img { height: 34px; width: auto; }
-    .brand h2 { font-size: 1.1rem; letter-spacing: .2px; margin: 0; }
 
-    .nav { display: grid; gap: 6px; }
-    .nav button {
-      text-align: left; border: 1px solid var(--border); background: transparent;
-      color: var(--text); padding: 10px 12px; border-radius: 10px; font-weight: 600;
-      cursor: pointer; display: flex; align-items: center; gap: 10px; transition: background .2s ease, transform .06s;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
     }
-    .nav button:hover { background: var(--table-stripe); }
-    .nav button.active { background: linear-gradient(90deg, var(--brand), var(--brand-2)); border-color: transparent; }
+
+    .brand img {
+      height: 34px;
+      width: auto;
+    }
+
+    .brand h2 {
+      font-size: 1.1rem;
+      letter-spacing: .2px;
+      margin: 0;
+    }
+
+    .nav {
+      display: grid;
+      gap: 6px;
+    }
+
+    .nav button {
+      text-align: left;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background .2s ease, transform .06s;
+      position: relative; /* Add position for pseudo-element */
+    }
+
+    .nav button:hover {
+      background: rgba(34, 77, 183, 0.1);
+    }
+
+    .nav button.active {
+      background: rgba(34, 77, 183, 0.1); /* Keep the subtle hover background */
+      color: white; /* Maintain white text for active state */
+      border-color: rgba(34, 77, 183, 0.3); /* Optional: a slight border change */
+    }
+
+    .nav button.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px; /* The width of the vertical line */
+      height: 80%; /* The height of the vertical line */
+      background-color: var(--brand); /* The color of the line */
+      border-radius: 0 4px 4px 0; /* Optional: rounded corners on the right */
+    }
+
+    .nav button.active:hover {
+      background: rgba(34, 77, 183, 0.2); /* Make hover a bit more noticeable on the active state */
+    }
     
     body[dir="rtl"] .sidebar { border-left: 1px solid var(--border); border-right: none; }
     body[dir="rtl"] .nav button { text-align: right; flex-direction: row-reverse; }
@@ -81,8 +139,9 @@
     .top-actions { display: flex; gap: 10px; align-items: center; }
     .btn { border: 1px solid var(--border); background: var(--card); color: var(--text);
            padding: 9px 12px; border-radius: 10px; font-weight: 700; cursor: pointer; }
-    .btn.primary { background: linear-gradient(90deg, var(--brand), var(--brand-2)); border-color: transparent; }
+    .btn.primary { background: linear-gradient(90deg, var(--brand), var(--brand-2)); border-color: transparent; color: white;}
     .menu-toggle { display: none; }
+    body.light .btn.primary { color: white; }
 
     /* Language selector */
     .language-selector {
@@ -131,9 +190,27 @@
 
     /* Tables */
     .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; min-width: 600px; }
-    th, td { padding: 12px 14px; border-bottom: 1px solid var(--border); text-align: left; }
-    th { background: var(--panel); color: var(--text); position: sticky; top: 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      table-layout: fixed;
+    }
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      word-wrap: break-word;
+    }
+    th {
+      background: var(--panel);
+      color: var(--text);
+      position: sticky;
+      top: 0;
+    }
     tr:nth-child(even) td { background: var(--table-stripe); }
     
     body[dir="rtl"] th, body[dir="rtl"] td { text-align: right; }
@@ -142,16 +219,50 @@
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .grid-1 { display: grid; grid-template-columns: 1fr; gap: 14px; }
     label { font-weight: 700; font-size: .9rem; color: var(--muted); }
-    input, select, textarea { width: 100%; padding: 11px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); color: var(--text); }
+    input, select, textarea { 
+      width: 100%; 
+      padding: 11px 12px; 
+      border: 1px solid var(--border); 
+      border-radius: 10px; 
+      background: var(--surface); 
+      color: var(--text); 
+      transition: border-color .2s ease;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--brand-2);
+    }
     textarea { min-height: 110px; resize: vertical; }
 
-    .chart-box { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; box-shadow: var(--shadow); }
+    /* Chart design changes */
+    .chart-box { 
+      background: var(--card); 
+      border: 1px solid var(--border); 
+      border-radius: 14px; 
+      padding: 16px; 
+      box-shadow: var(--shadow); 
+      height: 300px;
+      width: 100%;
+    }
+    .chart-box canvas {
+      height: 100% !important;
+      width: 100% !important;
+    }
 
     /* Responsive */
     @media (max-width: 1100px){
       .cards { grid-template-columns: repeat(2, 1fr); }
+      @media (min-width: 769px) and (max-width: 1100px) {
+  .chart-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+}
     }
     @media (max-width: 768px){
+      body {
+        overflow-x: hidden;
+      }
       .wrap { grid-template-columns: 1fr; }
       .sidebar {
         position: fixed;
@@ -179,15 +290,21 @@
       }
       .top-actions {
         gap: 5px;
+        flex-wrap: wrap;
       }
       .content {
         padding: 16px;
+        max-width: 100%;
+      }
+      .card {
+        max-width: 100%;
       }
       .cards {
         grid-template-columns: 1fr;
       }
       .chart-grid {
         grid-template-columns: 1fr;
+        gap: 12px;
       }
       .grid-2 {
         grid-template-columns: 1fr;
@@ -196,18 +313,17 @@
         grid-template-columns: 1fr;
       }
       .chart-box {
-        margin-top: 10px !important;
-        height: 300px;
-      }
-      .chart-box + .chart-box {
-        margin-top: 10px;
+        height: 250px; /* Adjusted for smaller screens */
       }
       .topbar .title {
         font-size: 1.2rem;
       }
-      .chart-box canvas {
-        width: 100% !important;
-        height: 100% !important;
+      /* Ensure sections are visible when mobile view is active and sidebar is closed */
+      .wrap.mobile-view .content .section {
+        display: none;
+      }
+      .wrap.mobile-view .content .section.active {
+        display: block;
       }
     }
   </style>
@@ -357,7 +473,7 @@
               <div>
                 <label for="caseType" data-key="service_type">Service Type</label>
                 <select id="caseType" required>
-                  <option value="Bookkeeping" data-key="bookkeeping">Bookkeeping</option>
+                  <option value="Bookkeeping" data-key="bookkeeping">Bookkeeping </option>
                   <option value="Tax Planning" data-key="tax_planning">Tax Planning</option>
                   <option value="Payroll Services" data-key="payroll_services">Payroll Services</option>
                   <option value="Financial Reporting" data-key="financial_reporting">Financial Reporting</option>
@@ -442,6 +558,8 @@
       const next = document.body.classList.contains('light') ? 'light' : 'dark';
       localStorage.setItem('theme', next);
       updateThemeLabel();
+      // Re-render charts to apply new theme colors
+      renderEverything();
     }
     function updateThemeLabel(){ $('#themeLabel') && ($('#themeLabel').textContent = document.body.classList.contains('light') ? 'Light' : 'Dark'); }
 
@@ -480,7 +598,7 @@
       "visits": { "en": "Visits", "ar": "الزيارات", "he": "ביקורים" },
       "clients": { "en": "Clients", "ar": "العملاء", "he": "לקוחות" },
       "clients_by_service_type": { "en": "Clients by Service Type", "ar": "العملاء حسب نوع الخدمة", "he": "לקוחות לפי סוג שירות" },
-      "top_query_subjects": { "en": "Top Query Subjects", "ar": "أهم مواضيع الاستعلام", "he": "נושאי השאילתות המובילים" },
+      "top_query_subjects": { "en": "Top Query Subjects", "ar": "أهم مواضيع الاستعلام", "he": "נושאי השאילتات המובילים" },
       "add_new_client": { "en": "Add New Client", "ar": "إضافة عميل جديد", "he": "הוסף לקוח חדש" },
       "client_name": { "en": "Client Name", "ar": "اسم العميل", "he": "שם הלקוח" },
       "service_type": { "en": "Service Type", "ar": "نوع الخدمة", "he": "סוג שירות" },
@@ -577,13 +695,17 @@
         // Close sidebar on mobile after clicking a link
         if (window.innerWidth <= 768) {
           $('.sidebar').classList.remove('active');
+          $('.wrap').classList.add('mobile-view');
         }
       });
     });
 
     // Mobile menu toggle
     $('#menuToggle').addEventListener('click', () => {
-      $('.sidebar').classList.toggle('active');
+      const sidebar = $('.sidebar');
+      const wrap = $('.wrap');
+      sidebar.classList.toggle('active');
+      wrap.classList.toggle('mobile-view', sidebar.classList.contains('active'));
     });
     
     // Close sidebar when clicking outside on mobile
@@ -592,6 +714,15 @@
         const menuToggle = $('#menuToggle');
         if (window.innerWidth <= 768 && sidebar.classList.contains('active') && !sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
             sidebar.classList.remove('active');
+            $('.wrap').classList.remove('mobile-view');
+        }
+    });
+    
+    // Add an event listener for window resize to handle class toggling
+    window.addEventListener('resize', () => {
+        const wrap = $('.wrap');
+        if (window.innerWidth > 768) {
+            wrap.classList.remove('mobile-view');
         }
     });
 
@@ -631,20 +762,77 @@
       $('#statVisits').textContent = visitCount;
       $('#statClients').textContent = clients.length;
 
+      // Get the current text color from CSS
+      const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
+
       // Charts
       const ctxPie = $('#chartLogPie').getContext('2d');
       const ctxOverview = $('#chartOverview').getContext('2d');
       if(chartLogPie) chartLogPie.destroy();
       if(chartOverview) chartOverview.destroy();
+      
       chartLogPie = new Chart(ctxPie, {
         type: 'pie',
-        data: { labels:['Logins','Logouts'], datasets:[{ data:[loginCount, logoutCount], backgroundColor:['#224DB7', '#5e6d8a'] }] },
-        options: { plugins:{ legend:{ position:'bottom', labels: { color: 'var(--text)' } } } }
+        data: { 
+          labels:['Logins','Logouts'], 
+          datasets:[{ 
+            data:[loginCount, logoutCount], 
+            backgroundColor:['#224DB7', '#5e6d8a'] 
+          }] 
+        },
+        options: { 
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins:{ 
+            legend:{ 
+              position:'bottom', 
+              labels: { 
+                color: textColor // Use the dynamically retrieved color
+              } 
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const label = context.label || '';
+                  const value = context.parsed || 0;
+                  return `${label}: ${value}`;
+                }
+              }
+            }
+          }
+        }
       });
+      
       chartOverview = new Chart(ctxOverview, {
         type: 'doughnut',
-        data: { labels:['Users','Queries','Clients','Logs'], datasets:[{ data:[users.length, queries.length, clients.length, logs.length], backgroundColor:['#224DB7', '#00d1ff', '#5b8cff', '#9fb0d0'] }] },
-        options: { plugins:{ legend:{ position:'bottom', labels: { color: 'var(--text)' } } } }
+        data: { 
+          labels:['Users','Queries','Clients','Logs'], 
+          datasets:[{ 
+            data:[users.length, queries.length, clients.length, logs.length], 
+            backgroundColor:['#224DB7', '#00d1ff', '#5b8cff', '#9fb0d0'] 
+          }] 
+        },
+        options: { 
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins:{ 
+            legend:{ 
+              position:'bottom', 
+              labels: { 
+                color: textColor // Use the dynamically retrieved color
+              } 
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const label = context.label || '';
+                  const value = context.parsed || 0;
+                  return `${label}: ${value}`;
+                }
+              }
+            }
+          }
+        }
       });
     }
 
@@ -702,7 +890,7 @@
       $$('#clientsTable [data-del]').forEach(btn=>{
         btn.addEventListener('click', () => {
           const id = btn.getAttribute('data-del');
-          let list = JSON.parse(localStorage.getItem('financeClients')) || []; // Updated key
+          let list = JSON.parse(localStorage.getItem('financeClients')) || [];
           list = list.filter(x => String(x.id) !== String(id));
           saveClients(list);
           renderEverything();
@@ -712,6 +900,9 @@
 
     function renderAnalyticsCharts(){
       const {clients, queries} = loadAll();
+
+      const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
+      const borderColor = getComputedStyle(document.body).getPropertyValue('--border').trim();
 
       // Case type distribution
       const caseCount = {};
@@ -724,7 +915,34 @@
       chartCases = new Chart(ctxCases, {
         type: 'bar',
         data: { labels: caseLabels, datasets: [{ label: 'Clients', data: caseValues, backgroundColor: '#224DB7' }] },
-        options: { plugins:{ legend:{ display:false } }, scales:{ y:{ beginAtZero:true, precision:0, grid: { color: 'var(--border)' }, ticks: { color: 'var(--text)' } }, x: { grid: { color: 'var(--border)' }, ticks: { color: 'var(--text)' } } } }
+        options: { 
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins:{ 
+            legend:{ display:false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const label = context.label || '';
+                  const value = context.parsed.y || 0;
+                  return `Clients: ${value}`;
+                }
+              }
+            }
+          }, 
+          scales:{ 
+            y:{ 
+              beginAtZero:true, 
+              precision:0, 
+              grid: { color: borderColor }, 
+              ticks: { color: textColor } 
+            }, 
+            x: { 
+              grid: { color: borderColor }, 
+              ticks: { color: textColor } 
+            } 
+          } 
+        }
       });
 
       // Top subjects from queries
@@ -739,7 +957,34 @@
       chartSubjects = new Chart(ctxSubjects, {
         type: 'bar',
         data: { labels: subjLabels, datasets: [{ label: 'Queries', data: subjValues, backgroundColor: '#00d1ff' }] },
-        options: { plugins:{ legend:{ display:false } }, scales:{ y:{ beginAtZero:true, precision:0, grid: { color: 'var(--border)' }, ticks: { color: 'var(--text)' } }, x: { grid: { color: 'var(--border)' }, ticks: { color: 'var(--text)' } } } }
+        options: { 
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins:{ 
+            legend:{ display:false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const label = context.label || '';
+                  const value = context.parsed.y || 0;
+                  return `Queries: ${value}`;
+                }
+              }
+            }
+          }, 
+          scales:{ 
+            y:{ 
+              beginAtZero:true, 
+              precision:0, 
+              grid: { color: borderColor }, 
+              ticks: { color: textColor } 
+            }, 
+            x: { 
+              grid: { color: borderColor }, 
+              ticks: { color: textColor } 
+            } 
+          } 
+        }
       });
     }
 
@@ -758,7 +1003,7 @@
       const email = $('#clientEmail').value.trim();
       const caseType = $('#caseType').value;
       const notes = $('#notes').value.trim();
-      let list = JSON.parse(localStorage.getItem('financeClients')) || []; // Updated key
+      let list = JSON.parse(localStorage.getItem('financeClients')) || [];
       list.push({ id: Date.now(), name, email, caseType, notes, date: new Date().toISOString() });
       saveClients(list);
 
