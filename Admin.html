@@ -326,6 +326,83 @@
         display: block;
       }
     }
+    @media (max-width: 768px){
+    body {
+        overflow-x: hidden;
+    }
+    .wrap { grid-template-columns: 1fr; }
+    .sidebar {
+        position: fixed;
+        left: -260px;
+        top: 0;
+        bottom: 0;
+        width: 260px;
+        z-index: 1000;
+        transition: left 0.3s ease-in-out;
+    }
+    .sidebar.active {
+        left: 0;
+    }
+    .menu-toggle {
+        display: block;
+        background: none;
+        border: none;
+        color: var(--text);
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0;
+    }
+    .topbar {
+        padding: 12px 20px;
+        /* Adjusted layout for better alignment */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .top-actions {
+        /* Adjusted spacing and wrapping */
+        display: flex;
+        gap: 8px; /* Increased gap for better visual separation */
+        flex-wrap: nowrap; /* Prevent wrapping to keep in one line if possible */
+        align-items: center;
+    }
+    .content {
+        padding: 16px;
+        max-width: 100%;
+    }
+    .card {
+        max-width: 100%;
+    }
+    .cards {
+        grid-template-columns: 1fr;
+    }
+    .chart-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+    .grid-1 {
+        grid-template-columns: 1fr;
+    }
+    .chart-box {
+        height: 250px;
+    }
+    .topbar .title {
+        font-size: 1.2rem;
+        /* Ensured proper spacing from menu toggle */
+        margin-right: auto;
+        padding-left: 10px;
+    }
+    .wrap.mobile-view .content .section {
+        display: none;
+    }
+    .wrap.mobile-view .content .section.active {
+        display: block;
+    }
+}
+    
   </style>
 </head>
 <body>
@@ -1034,6 +1111,7 @@
 
     // ======= Init =======
     renderEverything();
+    
   </script>
 </body>
 </html>
